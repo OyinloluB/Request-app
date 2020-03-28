@@ -20,6 +20,7 @@ export default function Merchtable(props) {
             <Table.Cell className="dashboard-value">
               <input
                 type="text"
+                className="editstock"
                 id={prod.key}
                 value={prod.value}
                 name="value"
@@ -34,6 +35,7 @@ export default function Merchtable(props) {
             <Table.Cell className="dashboard-value">
               <input
                 type="text"
+                className="editstock"
                 id={prod.key}
                 value={prod.value2}
                 name="value2"
@@ -48,6 +50,7 @@ export default function Merchtable(props) {
             <Table.Cell className="dashboard-value">
               <input
                 type="text"
+                className="editstock"
                 id={prod.key}
                 value={prod.value3}
                 name="value3"
@@ -62,6 +65,7 @@ export default function Merchtable(props) {
             <Table.Cell className="dashboard-value">
               <input
                 type="text"
+                className="editstock"
                 id={prod.key}
                 value={prod.value4}
                 name="value4"
@@ -76,6 +80,7 @@ export default function Merchtable(props) {
             <Table.Cell className="dashboard-value">
               <input
                 type="text"
+                className="editstock"
                 id={prod.key}
                 value={prod.value5}
                 name="value5"
@@ -90,6 +95,7 @@ export default function Merchtable(props) {
             <Table.Cell className="dashboard-value">
               <input
                 type="text"
+                className="editstock"
                 id={prod.key}
                 value={prod.value6}
                 name="value6"

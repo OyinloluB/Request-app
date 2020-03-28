@@ -15,11 +15,11 @@ class Dashboard extends Component {
         mlfive: "-",
         mlsix: "-",
         value: "0",
-		value2: "0",
-		value3: '0',
-		value4: '0',
-		value5: '0',
-		value6: '0',
+        value2: "0",
+        value3: "0",
+        value4: "0",
+        value5: "0",
+        value6: "0",
         key: "1"
       },
       {
@@ -31,11 +31,11 @@ class Dashboard extends Component {
         mlfive: "-",
         mlsix: "-",
         value: "0",
-		value2: "0",
-		value3: '0',
-		value4: '0',
-		value5: '0',
-		value6: '0',
+        value2: "0",
+        value3: "0",
+        value4: "0",
+        value5: "0",
+        value6: "0",
         key: "2"
       },
       {
@@ -47,11 +47,11 @@ class Dashboard extends Component {
         mlfive: "250ml (pet)",
         mlsix: "330ml (pet)",
         value: "0",
-		value2: "0",
-		value3: '0',
-		value4: '0',
-		value5: '0',
-		value6: '0',
+        value2: "0",
+        value3: "0",
+        value4: "0",
+        value5: "0",
+        value6: "0",
         key: "3"
       },
       {
@@ -63,11 +63,11 @@ class Dashboard extends Component {
         mlfive: "-",
         mlsix: "-",
         value: "0",
-		value2: "0",
-		value3: '0',
-		value4: '0',
-		value5: '0',
-		value6: '0',
+        value2: "0",
+        value3: "0",
+        value4: "0",
+        value5: "0",
+        value6: "0",
         key: "4"
       },
       {
@@ -79,11 +79,11 @@ class Dashboard extends Component {
         mlfive: "250ml (pet)",
         mlsix: "330ml (pet)",
         value: "0",
-		value2: "0",
-		value3: '0',
-		value4: '0',
-		value5: '0',
-		value6: '0',
+        value2: "0",
+        value3: "0",
+        value4: "0",
+        value5: "0",
+        value6: "0",
         key: "5"
       },
       {
@@ -95,11 +95,11 @@ class Dashboard extends Component {
         mlfive: "-",
         mlsix: "-",
         value: "0",
-		value2: "0",
-		value3: '0',
-		value4: '0',
-		value5: '0',
-		value6: '0',
+        value2: "0",
+        value3: "0",
+        value4: "0",
+        value5: "0",
+        value6: "0",
         key: "6"
       },
       {
@@ -146,11 +146,15 @@ class Dashboard extends Component {
       if (prod.key === key) {
         if (name === "value") {
           prod.value = value;
-        } else {
-          prod.value2 = value;
-          prod.value3 = value;
-          prod.value4 = value;
-          prod.value5 = value;
+        } else if (name === 'value2'){
+		  prod.value2 = value;
+		} else if (name === 'value3'){
+		  prod.value3 = value;
+		} else if (name === 'value4'){
+			prod.value4 = value;
+		} else if (name === 'value5'){
+		  prod.value5 = value;
+		} else {
           prod.value6 = value;
         }
       }

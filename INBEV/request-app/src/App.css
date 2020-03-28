@@ -102,6 +102,9 @@ form {
 #stockvalue {
   margin-bottom: 2%;
 }
+.editstock {
+  width: 100%;
+}
 #makerequest {
   display: flex;
   align-items: center;
