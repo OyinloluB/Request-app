@@ -143,6 +143,7 @@ form {
 #pet {
   max-width: 300px;
   margin-bottom: 5%;
+  margin-top: 5%;
   padding: 20px;
   border: 1px solid #b31020;
 }
