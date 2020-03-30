@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button, Form } from "semantic-ui-react";
 
-// import { NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 class Signinformdist extends Component {
   state = {
@@ -61,11 +61,11 @@ class Signinformdist extends Component {
             onChange={this.handleChange}
           />
         </Form.Field>
-        {/* <NavLink to="/requests"> */}
+        <NavLink to="/requests">
         <Button id="button" type="submit">
           Submit
         </Button>
-        {/* </NavLink> */}
+        </NavLink>
       </Form>
     );
   }

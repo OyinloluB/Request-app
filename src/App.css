@@ -65,8 +65,11 @@ form {
   padding-bottom: 8%;
 }
 #images {
+  background-image: url(./Assets/brands.jpg);
   height: 80vh;
-  object-fit: cover;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 #grid {
   padding: 50px 30px;
@@ -93,11 +96,12 @@ form {
   padding-bottom: 3%;
   text-transform: uppercase;
 }
-#selectprod,
 #stockvalue,
 #measurement {
   margin-top: 2%;
 }
+/* #selectprod {
+} */
 #selectprod h6,
 #stockvalue h6,
 #selectreq h6 {

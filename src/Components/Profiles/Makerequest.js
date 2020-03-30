@@ -83,7 +83,7 @@ class Makerequest extends Component {
               list="products"
               onChange={this.handleChange}
               placeholder="Select Products..."
-            />
+            /> 
             <datalist id="products">
               <option value="Budweiser" />
               <option value="Castle Lite" />
@@ -102,6 +102,7 @@ class Makerequest extends Component {
               onChange={this.handleChange}
               placeholder="Input Value..."
             />
+            <br />
             <div id="measurement">
               <Input
                 id="input"
@@ -124,6 +125,7 @@ class Makerequest extends Component {
                 onChange={this.handleChange}
                 placeholder="Input Value..."
               />
+              <br />
               <Input
                 id="input"
                 autocomplete="off"
@@ -144,6 +146,7 @@ class Makerequest extends Component {
                 onChange={this.handleChange}
                 placeholder="Input Value..."
               />
+              <br />
               <Input
                 id="input"
                 autocomplete="off"

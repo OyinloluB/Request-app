@@ -8,13 +8,13 @@ export default function Home() {
   return (
     <div>
       <Carousel>
-        <Carousel.Item>
-          <img
+        <Carousel.Item className="d-block w-100" id="images">
+          {/* <img
             className="d-block w-100"
             id="images"
             src={Imagethree}
             alt="First slide"
-          />
+          /> */}
         </Carousel.Item>
       </Carousel>
       <Footer />
