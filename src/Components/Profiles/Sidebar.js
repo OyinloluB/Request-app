@@ -11,7 +11,7 @@ import {
 import { Route, NavLink } from "react-router-dom";
 import Dashboard from "./Dashboard";
 import Updatestock from "./Updatestock";
-import Makerquest from "./Makerequest";
+import Makerequest from "./Makerequest";
 import Editdetails from "./Editdetails";
 
 class SidebarLeftScaleDown extends Component {
@@ -42,7 +42,7 @@ class SidebarLeftScaleDown extends Component {
           <Sidebar.Pusher>
             <Segment basic>
               <Route exact path="/dashboard/" component={Dashboard} />
-              <Route path="/dashboard/request" component={Makerquest} />
+              <Route path="/dashboard/request" component={Makerequest} />
               <Route path="/dashboard/editdetails" component={Editdetails} />
             </Segment>
           </Sidebar.Pusher>

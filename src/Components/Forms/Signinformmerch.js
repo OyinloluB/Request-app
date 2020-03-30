@@ -71,11 +71,11 @@ class Signinformmerch extends Component {
             onChange={this.handleChange}
           />
         </Form.Field>
-        {/* <NavLink to="/requests"> */}
+        <NavLink to="/dashboard/request">
         <Button id="button" type="submit">
           Submit
         </Button>
-        {/* </NavLink> */}
+        </NavLink>
       </Form>
     );
   }
