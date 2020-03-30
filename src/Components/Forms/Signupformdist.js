@@ -50,7 +50,7 @@ class Signupformdist extends Component {
           <label id="label">Station Name</label>
           <input
             type="text"
-            id="stationname"
+            id="name"
             placeholder="Station Name"
             onChange={this.handleChange}
           />
