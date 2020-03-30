@@ -29,7 +29,9 @@ export default function Navbar() {
             />
           </a>
           <a className="active item" id="active">
-            <Link to="/" id="home">Home</Link>
+            <Link to="/" id="home">
+              Home
+            </Link>
           </a>
         </div>
       </div>

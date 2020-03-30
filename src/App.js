@@ -20,7 +20,7 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar />
-      <div className="ui fluid container">
+      <div>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/signinmerch" component={Signinformmerch} />
