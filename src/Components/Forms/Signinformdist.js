@@ -30,7 +30,7 @@ class Signinformdist extends Component {
       password: password
     });
     try {
-      fetch("https://ab-inbev-requestapp.herokuapp.com/distributor_auth", {
+      fetch("https://ab-inbev-requestapp.herokuapp.com/distributor_login", {
         method: "POST",
         header: {
           "content-type": "application/json",

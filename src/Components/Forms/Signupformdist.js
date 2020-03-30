@@ -18,9 +18,6 @@ class Signupformdist extends Component {
     let location = this.state.location;
     let password = this.state.password;
 
-    console.log(name);
-    console.log(location);
-    console.log(password);
 
     this.setState({
       name: name,

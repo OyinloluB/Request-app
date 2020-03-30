@@ -26,14 +26,19 @@ class Signinformmerch extends Component {
       code: code
     });
     try {
-      fetch("https://ab-inbev-requestapp.herokuapp.com/merchandiser_auth", {
+      fetch("https://ab-inbev-requestapp.herokuapp.com/merchandiser_login", {
         method: "POST",
         header: { "content-type": "application/json" },
         body: JSON.stringify({
           password: password,
           code: code
         })
-      });
+      })
+      .then(res => res.json())
+      .then(data => {
+          alert('logged in')
+          console.log(data);
+      })
     } catch (error) {
       console.log(error);
     }
