@@ -35,6 +35,7 @@ class Signupformmerch extends Component {
       fetch("https://ab-inbev-requestapp.herokuapp.com/Merchandiser", {
         method: "POST",
         header: {
+          'Accept': 'application/json',
           "content-type": "application/json"
         },
         body: JSON.stringify({
@@ -43,7 +44,12 @@ class Signupformmerch extends Component {
           code: code,
           password: password
         })
-      });
+      })
+      .then(res => res.json())
+      .then(data => {
+          alert('added')
+          console.log(data);
+      })
     } catch (error) {
       console.log(error);
     }
