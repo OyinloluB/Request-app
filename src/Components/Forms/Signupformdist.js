@@ -41,8 +41,6 @@ class Signupformdist extends Component {
       });
     } catch (error) {
       console.log(error);
-    } if(Distributor){
-      window.location(Distributorpage);
     }
   };
   render() {
