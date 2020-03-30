@@ -3,9 +3,9 @@ import { Button, Form } from "semantic-ui-react";
 
 class Signupformdist extends Component {
   state = {
-    stationname: "",
-    password: "",
-    location: ""
+    name: "",
+    location: "",
+    password: ""
   };
   handleChange = e => {
     this.setState({
@@ -14,7 +14,36 @@ class Signupformdist extends Component {
   };
   handleSubmit = e => {
     e.preventDefault();
-    console.log(this.state);
+    let name = this.state.name;
+    let location = this.state.location;
+    let password = this.state.password;
+
+    console.log(name);
+    console.log(location);
+    console.log(password);
+
+    this.setState({
+      name: name,
+      location: location,
+      password: password
+    });
+    try {
+      fetch("https://ab-inbev-requestapp.herokuapp.com/Distributor", {
+        method: "POST",
+        header: {
+          "content-type": "application/json"
+        },
+        body: JSON.stringify({
+          name: name,
+          location: location,
+          password: password
+        })
+      });
+    } catch (error) {
+      console.log(error);
+    } if(Distributor){
+      window.location(Distributorpage);
+    }
   };
   render() {
     return (
@@ -29,20 +58,20 @@ class Signupformdist extends Component {
           />
         </Form.Field>
         <Form.Field>
-          <label id="label">Station Code</label>
-          <input
-            type="password"
-            id="password"
-            placeholder="Station Code"
-            onChange={this.handleChange}
-          />
-        </Form.Field>
-        <Form.Field>
           <label id="label">Location</label>
           <input
             type="text"
             id="location"
             placeholder="Location"
+            onChange={this.handleChange}
+          />
+        </Form.Field>
+        <Form.Field>
+          <label id="label">Password</label>
+          <input
+            type="password"
+            id="password"
+            placeholder="Password"
             onChange={this.handleChange}
           />
         </Form.Field>

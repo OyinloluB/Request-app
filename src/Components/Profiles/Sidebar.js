@@ -3,14 +3,10 @@ import {
   Sidebar,
   Segment,
   Button,
-  Menu,
-  Image,
-  Icon,
-  Header
+  Menu
 } from "semantic-ui-react";
 import { Route, NavLink } from "react-router-dom";
 import Dashboard from "./Dashboard";
-import Updatestock from "./Updatestock";
 import Makerequest from "./Makerequest";
 import Editdetails from "./Editdetails";
 

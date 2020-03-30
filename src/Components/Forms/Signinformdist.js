@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { Button, Form } from "semantic-ui-react";
 
-import { NavLink } from "react-router-dom";
+// import { NavLink } from "react-router-dom";
 
 class Signinformdist extends Component {
   state = {
     name: "",
-    location: ""
+    location: "",
+    password: ""
   };
   handleChange = e => {
     this.setState({
@@ -17,24 +18,27 @@ class Signinformdist extends Component {
     e.preventDefault();
     let name = this.state.name;
     let location = this.state.location;
+    let password = this.state.password;
 
     console.log(name);
     console.log(location);
+    console.log(password);
 
     this.setState({
       name: name,
-      location: location
+      location: location,
+      password: password
     });
     try {
       fetch("https://ab-inbev-requestapp.herokuapp.com/distributor_auth", {
         method: "POST",
         header: {
           "content-type": "application/json",
-          "Access-Control-Allow-Origin": "*"
         },
         body: JSON.stringify({
           name: name,
-          location: location
+          location: location,
+          password: password
         })
       });
     } catch (error) {
@@ -56,16 +60,25 @@ class Signinformdist extends Component {
           <label id="label">Location</label>
           <input
             type="text"
-            placeholder="Station Code"
+            placeholder="Location"
             id="location"
             onChange={this.handleChange}
           />
         </Form.Field>
-        <NavLink to="/requests">
+        <Form.Field>
+          <label id="label">Password</label>
+          <input
+            type="password"
+            placeholder="Password"
+            id="password"
+            onChange={this.handleChange}
+          />
+        </Form.Field>
+        {/* <NavLink to="/requests"> */}
         <Button id="button" type="submit">
           Submit
         </Button>
-        </NavLink>
+        {/* </NavLink> */}
       </Form>
     );
   }

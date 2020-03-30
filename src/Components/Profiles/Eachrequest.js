@@ -1,5 +1,5 @@
 import React from "react";
-import { List, Segment } from "semantic-ui-react";
+import { List } from "semantic-ui-react";
 import FlipMove from "react-flip-move";
 
 export default function Eachrequest(props) {

@@ -57,7 +57,7 @@ class Makerequest extends Component {
     const requests = this.state.request;
     requests.map(req => {
       if (req.key === key) {
-        req.product = product;
+         req.product = product;
       }
     });
     this.setState({

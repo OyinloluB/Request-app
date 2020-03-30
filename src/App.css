@@ -35,7 +35,7 @@
   border: 1px solid #b31020;
 }
 form {
-  margin: 2% 16%;
+  margin: 10% 16% 0 16%;
 }
 #button {
   color: #b31020;
@@ -66,7 +66,7 @@ form {
 }
 #images {
   background-image: url(./Assets/brands.jpg);
-  height: 80vh;
+  height: 90vh;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;

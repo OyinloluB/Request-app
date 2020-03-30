@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Progress } from "semantic-ui-react";
+import { Progress } from "semantic-ui-react";
 import Merchtable from "./Merchtable";
 
 class Dashboard extends Component {

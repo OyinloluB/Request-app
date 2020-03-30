@@ -3,9 +3,10 @@ import { Button, Form } from "semantic-ui-react";
 
 class Signupformmerch extends Component {
   state = {
-    stationname: "",
-    password: "",
-    location: ""
+    name: "",
+    location: "",
+    code: "",
+    password: ""
   };
   handleChange = e => {
     this.setState({
@@ -14,7 +15,38 @@ class Signupformmerch extends Component {
   };
   handleSubmit = e => {
     e.preventDefault();
-    console.log(this.state);
+    let name = this.state.name;
+    let location = this.state.location;
+    let code = this.state.code;
+    let password = this.state.password;
+
+    console.log(name);
+    console.log(location);
+    console.log(code);
+    console.log(password);
+
+    this.setState({
+      name: name,
+      location: location,
+      code: code,
+      password: password
+    });
+    try {
+      fetch("https://ab-inbev-requestapp.herokuapp.com/Merchandiser", {
+        method: "POST",
+        header: {
+          "content-type": "application/json"
+        },
+        body: JSON.stringify({
+          name: name,
+          location: location,
+          code: code,
+          password: password
+        })
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
   render() {
     return (
@@ -29,20 +61,29 @@ class Signupformmerch extends Component {
           />
         </Form.Field>
         <Form.Field>
-          <label id="label">Station Code</label>
-          <input
-            type="password"
-            id="password"
-            placeholder="Station Code"
-            onChange={this.handleChange}
-          />
-        </Form.Field>
-        <Form.Field>
           <label id="label">Location</label>
           <input
             type="text"
             id="location"
             placeholder="Location"
+            onChange={this.handleChange}
+          />
+        </Form.Field>
+        <Form.Field>
+          <label id="label">Code</label>
+          <input
+            type="text"
+            id="code"
+            placeholder="Station Code"
+            onChange={this.handleChange}
+          />
+        </Form.Field>
+        <Form.Field>
+          <label id="label">Password</label>
+          <input
+            type="password"
+            id="password"
+            placeholder="Password"
             onChange={this.handleChange}
           />
         </Form.Field>
