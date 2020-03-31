@@ -25,17 +25,11 @@ class Signupformmerch extends Component {
     console.log(code);
     console.log(password);
 
-    this.setState({
-      name: name,
-      location: location,
-      code: code,
-      password: password
-    });
     try {
       fetch("https://ab-inbev-requestapp.herokuapp.com/Merchandiser", {
         method: "POST",
         header: {
-          'Accept': 'application/json',
+          Accept: "application/json",
           "content-type": "application/json"
         },
         body: JSON.stringify({
@@ -45,11 +39,11 @@ class Signupformmerch extends Component {
           password: password
         })
       })
-      .then(res => res.json())
-      .then(data => {
-          alert('added')
+        .then(res => res.json())
+        .then(data => {
+          alert("sign up");
           console.log(data);
-      })
+        });
     } catch (error) {
       console.log(error);
     }
@@ -64,6 +58,7 @@ class Signupformmerch extends Component {
             id="name"
             placeholder="Station Name"
             onChange={this.handleChange}
+            value={this.state.name}
           />
         </Form.Field>
         <Form.Field>
@@ -73,6 +68,7 @@ class Signupformmerch extends Component {
             id="location"
             placeholder="Location"
             onChange={this.handleChange}
+            value={this.state.location}
           />
         </Form.Field>
         <Form.Field>
@@ -82,6 +78,7 @@ class Signupformmerch extends Component {
             id="code"
             placeholder="Station Code"
             onChange={this.handleChange}
+            value={this.state.code}
           />
         </Form.Field>
         <Form.Field>
@@ -91,6 +88,7 @@ class Signupformmerch extends Component {
             id="password"
             placeholder="Password"
             onChange={this.handleChange}
+            value={this.state.password}
           />
         </Form.Field>
         <Button id="button" type="submit">

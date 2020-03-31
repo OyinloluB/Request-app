@@ -20,20 +20,11 @@ class Signinformdist extends Component {
     let location = this.state.location;
     let password = this.state.password;
 
-    console.log(name);
-    console.log(location);
-    console.log(password);
-
-    this.setState({
-      name: name,
-      location: location,
-      password: password
-    });
     try {
       fetch("https://ab-inbev-requestapp.herokuapp.com/distributor_login", {
         method: "POST",
         header: {
-          "content-type": "application/json",
+          "content-type": "application/json"
         },
         body: JSON.stringify({
           name: name,
@@ -51,9 +42,11 @@ class Signinformdist extends Component {
         <Form.Field>
           <label id="label">Station Name</label>
           <input
+            type="text"
             placeholder="Station Name"
             id="name"
             onChange={this.handleChange}
+            value={this.state.name}
           />
         </Form.Field>
         <Form.Field>
@@ -63,6 +56,7 @@ class Signinformdist extends Component {
             placeholder="Location"
             id="location"
             onChange={this.handleChange}
+            value={this.state.location}
           />
         </Form.Field>
         <Form.Field>
@@ -72,6 +66,7 @@ class Signinformdist extends Component {
             placeholder="Password"
             id="password"
             onChange={this.handleChange}
+            value={this.state.password}
           />
         </Form.Field>
         {/* <NavLink to="/requests"> */}

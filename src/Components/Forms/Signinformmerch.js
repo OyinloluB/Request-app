@@ -18,13 +18,6 @@ class Signinformmerch extends Component {
     let password = this.state.password;
     let code = this.state.code;
 
-    console.log(password);
-    console.log(code);
-
-    this.setState({
-      password: password,
-      code: code
-    });
     try {
       fetch("https://ab-inbev-requestapp.herokuapp.com/merchandiser_login", {
         method: "POST",
@@ -34,11 +27,11 @@ class Signinformmerch extends Component {
           code: code
         })
       })
-      .then(res => res.json())
-      .then(data => {
-          alert('logged in')
+        .then(res => res.json())
+        .then(data => {
+          alert("logged in");
           console.log(data);
-      })
+        });
     } catch (error) {
       console.log(error);
     }
@@ -50,6 +43,7 @@ class Signinformmerch extends Component {
           <label id="label">Station Code</label>
           <input
             type="text"
+            value={this.state.code}
             placeholder="Station Code"
             id="code"
             onChange={this.handleChange}
@@ -59,15 +53,16 @@ class Signinformmerch extends Component {
           <label id="label">Password</label>
           <input
             type="password"
+            value={this.state.password}
             placeholder="Password"
             id="password"
             onChange={this.handleChange}
           />
         </Form.Field>
         {/* <NavLink to="/dashboard/request"> */}
-          <Button id="button" type="submit">
-            Submit
-          </Button>
+        <Button id="button" type="submit">
+          Submit
+        </Button>
         {/* </NavLink> */}
       </Form>
     );

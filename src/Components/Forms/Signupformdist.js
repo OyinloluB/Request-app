@@ -18,17 +18,11 @@ class Signupformdist extends Component {
     let location = this.state.location;
     let password = this.state.password;
 
-
-    this.setState({
-      name: name,
-      location: location,
-      password: password
-    });
     try {
       fetch("https://ab-inbev-requestapp.herokuapp.com/Distributor", {
         method: "POST",
         header: {
-          'Accept': 'application/json',
+          Accept: "application/json",
           "content-type": "application/json"
         },
         body: JSON.stringify({
@@ -37,11 +31,11 @@ class Signupformdist extends Component {
           password: password
         })
       })
-      .then(res => res.json())
-      .then(data => {
-          alert('added')
+        .then(res => res.json())
+        .then(data => {
+          alert("added");
           console.log(data);
-      })
+        });
     } catch (error) {
       console.log(error);
     }
@@ -53,6 +47,7 @@ class Signupformdist extends Component {
           <label id="label">Station Name</label>
           <input
             type="text"
+            value={this.state.name}
             id="name"
             placeholder="Station Name"
             onChange={this.handleChange}
@@ -62,6 +57,7 @@ class Signupformdist extends Component {
           <label id="label">Location</label>
           <input
             type="text"
+            value={this.state.location}
             id="location"
             placeholder="Location"
             onChange={this.handleChange}
@@ -71,6 +67,7 @@ class Signupformdist extends Component {
           <label id="label">Password</label>
           <input
             type="password"
+            value={this.state.password}
             id="password"
             placeholder="Password"
             onChange={this.handleChange}
