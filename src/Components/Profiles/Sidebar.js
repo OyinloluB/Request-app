@@ -1,17 +1,15 @@
 import React, { Component } from "react";
-import {
-  Sidebar,
-  Segment,
-  Button,
-  Menu
-} from "semantic-ui-react";
+import { Sidebar, Segment, Button, Menu } from "semantic-ui-react";
 import { Route, NavLink } from "react-router-dom";
 import Dashboard from "./Dashboard";
 import Makerequest from "./Makerequest";
 import Editdetails from "./Editdetails";
 
 class SidebarLeftScaleDown extends Component {
-  state = { visible: false };
+  state = {
+    isLoggedIn: false,
+    visible: false
+  };
 
   toggleVisibility = () => this.setState({ visible: !this.state.visible });
 
@@ -30,9 +28,15 @@ class SidebarLeftScaleDown extends Component {
             vertical
             inverted
           >
-            <Menu.Item name="home"><NavLink to="/dashboard/">Dashboard</NavLink></Menu.Item>
-            <Menu.Item name="gamepad"><NavLink to="/dashboard/request">Make Request</NavLink></Menu.Item>
-            <Menu.Item name="camera"><NavLink to="/dashboard/editdetails">Edit details</NavLink></Menu.Item>
+            <Menu.Item name="home">
+              <NavLink to="/dashboard/">Dashboard</NavLink>
+            </Menu.Item>
+            <Menu.Item name="gamepad">
+              <NavLink to="/dashboard/request">Make Request</NavLink>
+            </Menu.Item>
+            <Menu.Item name="camera">
+              <NavLink to="/dashboard/editdetails">Edit details</NavLink>
+            </Menu.Item>
             <Menu.Item name="camera">Log Out</Menu.Item>
           </Sidebar>
           <Sidebar.Pusher>

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Navbar from '../Layout/Navbar';
 import { Button, Form } from "semantic-ui-react";
 
 class Signupformmerch extends Component {
@@ -6,7 +7,7 @@ class Signupformmerch extends Component {
     name: "",
     location: "",
     code: "",
-    password: "",
+    password: ""
   };
 
   handleChange = e => {
@@ -26,32 +27,31 @@ class Signupformmerch extends Component {
     console.log(code);
     console.log(password);
 
-    try {
-      fetch("https://ab-inbev-requestapp.herokuapp.com/Merchandiser", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          name: name,
-          location: location,
-          code: code,
-          password: password
-        })
+    fetch("https://ab-inbev-requestapp.herokuapp.com/Merchandiser", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        name: name,
+        location: location,
+        code: code,
+        password: password
       })
-        .then(res => res.json())
-        .then(data => {
-          alert("sign up");
-          console.log(data);
-        });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    })
+      .then(res => res.json())
+      .then(data => {
+        this.props.toggleMerchandiser(true);
+        this.props.history.push("/dashboard");
+      })
+      .catch((err) => console.log(err));
+      };
   render() {
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <div>
+        <Navbar />
+        <Form onSubmit={this.handleSubmit}>
         <Form.Field>
           <label id="label">Station Name</label>
           <input
@@ -96,6 +96,7 @@ class Signupformmerch extends Component {
           Submit
         </Button>
       </Form>
+      </div>
     );
   }
 }

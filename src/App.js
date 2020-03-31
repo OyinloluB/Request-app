@@ -1,8 +1,8 @@
-import React from "react";
+import React, { Component } from "react";
 
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Home from "./Components/General/Home";
-import Navbar from "./Components/Layout/Navbar";
+// import Navbar from "./Components/Layout/Navbar";
 import Signinformmerch from "./Components/Forms/Signinformmerch";
 import Signinformdist from "./Components/Forms/Signinformdist";
 import Signupformmerch from "./Components/Forms/Signupformmerch";
@@ -16,26 +16,86 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Sidebar from "./Components/Profiles/Sidebar";
 import Distributorpage from "./Components/Profiles/Distributorpage";
 
-function App() {
-  return (
-    <BrowserRouter>
-      <Navbar />
-      <div>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/signinmerch" component={Signinformmerch} />
-          <Route path="/signupmerch" component={Signupformmerch} />
-          <Route path="/signindist" component={Signinformdist} />
-          <Route path="/signupdist" component={Signupformdist} />
-          <Route path="/dashboard" component={Sidebar} />
-          <Route path="/requests" component={Distributorpage} />
-          <Route path="/signinadmin" component={Signinformadmin} />
-          <Route path="/signupadmin" component={Signupformadmin} />
-        </Switch>
-        {/* <Updatestock /> */}
-      </div>
-    </BrowserRouter>
-  );
+const ProtectedRoute = ({ path, component: Comp, auth, exact, to, ...props }) => (
+  <Route
+    path={path}
+    exact={!!exact}
+    render={() =>
+      auth ? (
+        <Comp isLoggedIn={auth} {...props} />
+      ) : (
+        <Redirect to={to || "/signupmerch" || "/signupdist"} />
+      )
+    }
+  />
+);
+
+const PropsRoute = ({ component: Comp, ...props }) => (
+  <Route path={props.path} render={(routeProps) => <Comp {...routeProps} {...props} />} />
+);
+
+class App extends Component {
+  state = {
+    isLoggedIn: false,
+    merchandiser: false,
+    distributor: false
+  };
+  toggleMerchandiser = arg => {
+    this.setState({ isMerchandiser: arg });
+  };
+  toggleDistributor = arg => {
+    this.setState({ isDistributor: arg });
+  };
+
+  render() {
+    return (
+      <BrowserRouter>
+        {/* <Navbar /> */}
+        <div>
+          <Switch>
+            <PropsRoute exact path="/" component={Home} />
+            <PropsRoute
+              toggleMerchandiser={this.toggleMerchandiser.bind(this)}
+              path="/signinmerch"
+              component={Signinformmerch}
+            />
+            <PropsRoute
+              toggleMerchandiser={this.toggleMerchandiser.bind(this)}
+              path="/signupmerch"
+              component={Signupformmerch}
+            />
+            <PropsRoute
+              toggleDistributor={this.toggleDistributor.bind(this)}
+              path="/signindist"
+              component={Signinformdist}
+            />
+            <PropsRoute
+              toggleDistributor={this.toggleDistributor.bind(this)}
+              path="/signupdist"
+              component={Signupformdist}
+            />
+            <ProtectedRoute
+              toggleMerchandiser={this.toggleMerchandiser.bind(this)}
+              to="/signupmerch"
+              path="/dashboard"
+              auth={this.state.isLoggedIn}
+              component={Sidebar}
+            />
+            <ProtectedRoute
+              toggleDistributor={this.toggleDistributor.bind(this)}
+              to="/signupdist"
+              path="/requests"
+              auth={this.state.isLoggedIn}
+              component={Distributorpage}
+            />
+            <PropsRoute path="/signinadmin" component={Signinformadmin} />
+            <PropsRoute path="/signupadmin" component={Signupformadmin} />
+          </Switch>
+          {/* <Updatestock /> */}
+        </div>
+      </BrowserRouter>
+    );
+  }
 }
 
 export default App;
