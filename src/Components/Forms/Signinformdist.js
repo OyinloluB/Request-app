@@ -23,8 +23,8 @@ class Signinformdist extends Component {
     try {
       fetch("https://ab-inbev-requestapp.herokuapp.com/distributor_login", {
         method: "POST",
-        header: {
-          "content-type": "application/json"
+        headers: {
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
           name: name,

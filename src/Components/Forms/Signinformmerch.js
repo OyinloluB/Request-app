@@ -21,7 +21,7 @@ class Signinformmerch extends Component {
     try {
       fetch("https://ab-inbev-requestapp.herokuapp.com/merchandiser_login", {
         method: "POST",
-        header: { "content-type": "application/json" },
+        headers: {"Content-Type": "application/json" },
         body: JSON.stringify({
           password: password,
           code: code

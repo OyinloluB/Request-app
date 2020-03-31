@@ -1,6 +1,6 @@
-import React from "react";
+import React, { Component } from "react";
 
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Home from "./Components/General/Home";
 import Navbar from "./Components/Layout/Navbar";
 import Signinformmerch from "./Components/Forms/Signinformmerch";
@@ -16,26 +16,58 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Sidebar from "./Components/Profiles/Sidebar";
 import Distributorpage from "./Components/Profiles/Distributorpage";
 
-function App() {
-  return (
-    <BrowserRouter>
-      <Navbar />
-      <div>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/signinmerch" component={Signinformmerch} />
-          <Route path="/signupmerch" component={Signupformmerch} />
-          <Route path="/signindist" component={Signinformdist} />
-          <Route path="/signupdist" component={Signupformdist} />
-          <Route path="/dashboard" component={Sidebar} />
-          <Route path="/requests" component={Distributorpage} />
-          <Route path="/signinadmin" component={Signinformadmin} />
-          <Route path="/signupadmin" component={Signupformadmin} />
-        </Switch>
-        {/* <Updatestock /> */}
-      </div>
-    </BrowserRouter>
-  );
+class App extends Component {
+  state = {
+    user: {},
+    isLoggedIn: false,
+    redirectPage: ""
+  };
+
+  loadUser = (userObj, nextPagePath) => {
+    this.setState({
+      isLoggedIn: true,
+      user: { ...userObj },
+      redirectPage: nextPagePath
+    });
+  };
+  render() {
+    let page,
+      redirectPage = null;
+    if (!this.state.isLoggedIn) {
+     return( page = (
+        <BrowserRouter>
+          <Switch>
+            <Navbar />
+            <Route exact path="/" component={Home} />
+            <Route path="/signinmerch" component={Signinformmerch} />
+            <Route path="/signupmerch" component={Signupformmerch} />
+            <Route path="/signindist" component={Signinformdist} />
+            <Route path="/signupdist" component={Signupformdist} />
+            <Route path="/signinadmin" component={Signinformadmin} />
+            <Route path="/signupadmin" component={Signupformadmin} />
+          </Switch>
+        </BrowserRouter>
+      )
+     );
+    } else {
+      page = (
+        <BrowserRouter>
+          <Switch>
+            <Route path="/dashboard" component={Sidebar} />
+            <Route path="/requests" component={Distributorpage} />
+          </Switch>
+        </BrowserRouter>
+      );
+    }
+    if (this.state.redirectPage !== "") {
+      redirectPage = <Redirect to={this.state.redirectPage} />;
+    }
+    return (
+      <React.Fragment>
+        {redirectPage} {page}
+      </React.Fragment>
+    );
+  }
 }
 
 export default App;

@@ -28,9 +28,9 @@ class Signupformmerch extends Component {
     try {
       fetch("https://ab-inbev-requestapp.herokuapp.com/Merchandiser", {
         method: "POST",
-        header: {
+        headers: {
           Accept: "application/json",
-          "content-type": "application/json"
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
           name: name,
