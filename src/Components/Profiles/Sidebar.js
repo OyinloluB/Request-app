@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Sidebar, Segment, Button, Menu } from "semantic-ui-react";
 import { Route, NavLink } from "react-router-dom";
 import Dashboard from "./Dashboard";
-import Makerequest from "./Makerequest";
+import Request from "./Request";
 import Editdetails from "./Editdetails";
 
 class SidebarLeftScaleDown extends Component {
@@ -42,9 +42,9 @@ class SidebarLeftScaleDown extends Component {
             </Menu.Item>
           </Sidebar>
           <Sidebar.Pusher>
-            <Segment basic>
+            <Segment basic id="segment-height">
               <Route exact path="/dashboard/" component={Dashboard} />
-              <Route path="/dashboard/request" component={Makerequest} />
+              <Route path="/dashboard/request" component={Request} />
               <Route path="/dashboard/editdetails" component={Editdetails} />
             </Segment>
           </Sidebar.Pusher>
