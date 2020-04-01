@@ -37,7 +37,9 @@ class SidebarLeftScaleDown extends Component {
             <Menu.Item name="camera">
               <NavLink to="/dashboard/editdetails">Edit details</NavLink>
             </Menu.Item>
-            <Menu.Item name="camera">Log Out</Menu.Item>
+            <Menu.Item name="camera" onClick={this.props.logout}>
+              Log Out
+            </Menu.Item>
           </Sidebar>
           <Sidebar.Pusher>
             <Segment basic>

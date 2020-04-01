@@ -24,7 +24,7 @@ const ProtectedRoute = ({ path, component: Comp, auth, exact, to, ...props }) =>
       auth ? (
         <Comp isLoggedIn={auth} {...props} />
       ) : (
-        <Redirect to={to || "/signupmerch" || "/signupdist"} />
+        <Redirect to={to || "/"} />
       )
     }
   />
@@ -41,12 +41,14 @@ class App extends Component {
     distributor: false
   };
   toggleMerchandiser = arg => {
-    this.setState({ isMerchandiser: arg });
+    this.setState({ isLoggedIn: arg, isMerchandiser: arg });
   };
   toggleDistributor = arg => {
-    this.setState({ isDistributor: arg });
+    this.setState({ isLoggedIn: arg, isDistributor: arg });
   };
-
+  logout = () => {
+    this.setState({ isLoggedIn: false, merchandiser: false, distributor: false})
+  }
   render() {
     return (
       <BrowserRouter>
@@ -64,6 +66,7 @@ class App extends Component {
               path="/signupmerch"
               component={Signupformmerch}
             />
+            
             <PropsRoute
               toggleDistributor={this.toggleDistributor.bind(this)}
               path="/signindist"
@@ -80,6 +83,7 @@ class App extends Component {
               path="/dashboard"
               auth={this.state.isLoggedIn}
               component={Sidebar}
+              logout={this.logout.bind(this)}
             />
             <ProtectedRoute
               toggleDistributor={this.toggleDistributor.bind(this)}
@@ -87,6 +91,7 @@ class App extends Component {
               path="/requests"
               auth={this.state.isLoggedIn}
               component={Distributorpage}
+              logout={this.logout.bind(this)}
             />
             <PropsRoute path="/signinadmin" component={Signinformadmin} />
             <PropsRoute path="/signupadmin" component={Signupformadmin} />
