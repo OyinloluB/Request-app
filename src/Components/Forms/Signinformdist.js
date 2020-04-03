@@ -33,7 +33,7 @@ class Signinformdist extends Component {
       })
     })
       .then(data => {
-        this.props.history.push("/requests");
+        this.props.history.push("/distributor");
       })
       .catch(err => console.log(err));
   };

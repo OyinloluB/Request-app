@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { Progress } from "semantic-ui-react";
-import Merchtable from "./Merchtable";
+import { Progress, Button } from "semantic-ui-react";
+import Merchtable from "../Merchandiser/Merchtable";
 
 class Dashboard extends Component {
   state = {
     percent: 33,
+    dynamicProducts: [],
     products: [
       {
         name: "Budweiser",
@@ -140,21 +141,41 @@ class Dashboard extends Component {
       }
     ]
   };
+
+  componentDidMount() {
+    fetch("https://ab-inbev-requestapp.herokuapp.com/stockLevel", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      },
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+       this.setState({
+         dynamicProducts: data
+       });
+      })
+      .catch(err => console.log(err));
+  }
+
+
+
   setUpdate = (value, name, key) => {
     const products = this.state.products;
     products.map(prod => {
       if (prod.key === key) {
         if (name === "value") {
           prod.value = value;
-        } else if (name === 'value2'){
-		  prod.value2 = value;
-		} else if (name === 'value3'){
-		  prod.value3 = value;
-		} else if (name === 'value4'){
-			prod.value4 = value;
-		} else if (name === 'value5'){
-		  prod.value5 = value;
-		} else {
+        } else if (name === "value2") {
+          prod.value2 = value;
+        } else if (name === "value3") {
+          prod.value3 = value;
+        } else if (name === "value4") {
+          prod.value4 = value;
+        } else if (name === "value5") {
+          prod.value5 = value;
+        } else {
           prod.value6 = value;
         }
       }
@@ -181,6 +202,7 @@ class Dashboard extends Component {
                 setUpdate={this.setUpdate}
               />
             </div>
+            <button id="button">Submit</button>
           </div>
           <div id="bar">
             <h6>Latest request status</h6>

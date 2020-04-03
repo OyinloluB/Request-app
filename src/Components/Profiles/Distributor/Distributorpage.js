@@ -22,7 +22,7 @@ class Distributorpage extends Component {
     render() {
         return (
             <div className="container">
-                <button onClick={this.props.logout}>Log Out</button>
+                {/* <button onClick={this.props.logout}>Log Out</button> */}
                 <Table singleLine id="table">
                     <Table.Header>
                         <Table.Row>

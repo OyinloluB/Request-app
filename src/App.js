@@ -13,8 +13,10 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 //for viewing purposes
-import Sidebar from "./Components/Profiles/Sidebar";
-import Distributorpage from "./Components/Profiles/Distributorpage";
+import Sidebar from "./Components/Profiles/Merchandiser/Sidebar";
+import SidebarDist from './Components/Profiles/Distributor/SidebarDist';
+import SidebarAdmin from './Components/Profiles/Admin/SidebarAdmin';
+
 
 const ProtectedRoute = ({ path, component: Comp, auth, exact, to, ...props }) => (
   <Route
@@ -38,7 +40,8 @@ class App extends Component {
   state = {
     isLoggedIn: false,
     merchandiser: false,
-    distributor: false
+    distributor: false,
+    admin: false
   };
   toggleMerchandiser = arg => {
     this.setState({ isLoggedIn: arg, isMerchandiser: arg });
@@ -46,9 +49,17 @@ class App extends Component {
   toggleDistributor = arg => {
     this.setState({ isLoggedIn: arg, isDistributor: arg });
   };
+  toggleAdmin = arg => {
+    this.setState({ isLoggedIn: arg, isAdmin: arg });
+  };
   logout = () => {
-    this.setState({ isLoggedIn: false, merchandiser: false, distributor: false})
-  }
+    this.setState({
+      isLoggedIn: false,
+      merchandiser: false,
+      distributor: false,
+      admin: false
+    });
+  };
   render() {
     return (
       <BrowserRouter>
@@ -66,7 +77,7 @@ class App extends Component {
               path="/signupmerch"
               component={Signupformmerch}
             />
-            
+
             <PropsRoute
               toggleDistributor={this.toggleDistributor.bind(this)}
               path="/signindist"
@@ -80,7 +91,7 @@ class App extends Component {
             <ProtectedRoute
               toggleMerchandiser={this.toggleMerchandiser.bind(this)}
               to="/signupmerch"
-              path="/dashboard"
+              path="/dashboard/"
               auth={this.state.isLoggedIn}
               component={Sidebar}
               logout={this.logout.bind(this)}
@@ -88,9 +99,17 @@ class App extends Component {
             <ProtectedRoute
               toggleDistributor={this.toggleDistributor.bind(this)}
               to="/signupdist"
-              path="/requests"
+              path="/distributor-dash/"
               auth={this.state.isLoggedIn}
-              component={Distributorpage}
+              component={SidebarDist}
+              logout={this.logout.bind(this)}
+            />
+            <ProtectedRoute
+              toggleAdmin={this.toggleAdmin.bind(this)}
+              to="/signupadmin"
+              path="/distributor/"
+              auth={this.state.isLoggedIn}
+              component={SidebarAdmin}
               logout={this.logout.bind(this)}
             />
             <PropsRoute path="/signinadmin" component={Signinformadmin} />

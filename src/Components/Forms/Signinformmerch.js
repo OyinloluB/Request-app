@@ -30,7 +30,7 @@ class Signinformmerch extends Component {
       .then(res => res.json())
       .then(data => {
         this.props.toggleMerchandiser(true);
-        this.props.history.push("/dashboard");
+        this.props.history.push("/dashboard/");
       })
       .catch(err => console.log(err));
   };

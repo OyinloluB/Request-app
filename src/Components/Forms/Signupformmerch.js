@@ -11,11 +11,9 @@ class Signupformmerch extends Component {
     formIsValid: false,
     errorModalActive: false
   };
-  handleChange(e) {
+  handleChange = e => {
     const fieldName = e.target.id;
     const value = e.target.value;
-    console.log(this.state);
-    console.log(this.state[fieldName]);
     const field = { ...this.state[fieldName] };
 
     switch (fieldName) {
@@ -28,19 +26,23 @@ class Signupformmerch extends Component {
         field.validation = field.valid ? "" : `${fieldName} is required`;
         break;
     }
-    const formIsValid = Object.keys(this.state).reduce((acc, field) => {
+    const { formIsValid, errorModalActive, ...fields } = this.state;
+    const isFormValid = Object.keys(fields).reduce((acc, fieldKey) => {
+      const field = this.state[fieldKey];
+      console.log(`${fieldKey}: ${field.valid}`);
       return acc && field.valid;
     }, true);
-
+    console.log(isFormValid);
     this.setState({
       [fieldName]: { ...field, value },
-      formIsValid
+      formIsValid: isFormValid
     });
-  }
+  };
 
   handleSubmit = e => {
     e.preventDefault();
     if (!this.state.formIsValid) {
+      console.log(this.state.formIsValid);
       this.setState({ errorModalActive: true });
       return;
     }

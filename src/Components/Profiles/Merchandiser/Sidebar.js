@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Sidebar, Segment, Button, Menu } from "semantic-ui-react";
 import { Route, NavLink } from "react-router-dom";
-import Dashboard from "./Dashboard";
-import Request from "./Request";
-import Editdetails from "./Editdetails";
+import Dashboard from "../Merchandiser/Dashboard";
+import Request from "../Merchandiser/Request";
+import Editdetails from "../Merchandiser/Editdetails";
 
 class SidebarLeftScaleDown extends Component {
   state = {

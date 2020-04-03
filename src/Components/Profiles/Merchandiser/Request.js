@@ -138,6 +138,7 @@ class Request extends Component {
       };
       fetch("https://ab-inbev-requestapp.herokuapp.com/Request", {
         method: "POST",
+        mode: "no-cors",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json"
