@@ -1,26 +1,53 @@
 import React, { Component } from "react";
-import Navbar from '../Layout/Navbar';
-import { Button, Form } from "semantic-ui-react";
+import Navbar from "../Layout/Navbar";
+import { Button, Form, Header, Icon, Modal } from "semantic-ui-react";
 
 class Signupformmerch extends Component {
   state = {
-    name: "",
-    location: "",
-    code: "",
-    password: ""
+    name: { valid: false, value: "", validation: "Name is required" },
+    location: { valid: false, value: "", validation: "Location is required" },
+    code: { valid: false, value: "", validation: "Code is required" },
+    password: { valid: false, value: "", validation: "Password is required" },
+    formIsValid: false,
+    errorModalActive: false
   };
+  handleChange(e) {
+    const fieldName = e.target.id;
+    const value = e.target.value;
+    console.log(this.state);
+    console.log(this.state[fieldName]);
+    const field = { ...this.state[fieldName] };
 
-  handleChange = e => {
+    switch (fieldName) {
+      case "password":
+        field.valid = value.length >= 6;
+        field.validation = field.valid ? "" : "Password is too short";
+        break;
+      default:
+        field.valid = value.length > 0;
+        field.validation = field.valid ? "" : `${fieldName} is required`;
+        break;
+    }
+    const formIsValid = Object.keys(this.state).reduce((acc, field) => {
+      return acc && field.valid;
+    }, true);
+
     this.setState({
-      [e.target.id]: e.target.value
+      [fieldName]: { ...field, value },
+      formIsValid
     });
-  };
+  }
+
   handleSubmit = e => {
     e.preventDefault();
-    let name = this.state.name;
-    let location = this.state.location;
-    let code = this.state.code;
-    let password = this.state.password;
+    if (!this.state.formIsValid) {
+      this.setState({ errorModalActive: true });
+      return;
+    }
+    let name = this.state.name.value;
+    let location = this.state.location.value;
+    let code = this.state.code.value;
+    let password = this.state.password.value;
 
     console.log(name);
     console.log(location);
@@ -45,57 +72,77 @@ class Signupformmerch extends Component {
         this.props.toggleMerchandiser(true);
         this.props.history.push("/dashboard");
       })
-      .catch((err) => console.log(err));
-      };
+      .catch(err => console.log(err));
+  };
+  generateErrorMessages = () => {
+    const { formIsValid, errorModalActive, ...fields } = this.state;
+    return Object.keys(fields).map(fieldKey => {
+      const field = this.state[fieldKey];
+      if (!field.valid) {
+        return <p>{field.validation}</p>;
+      }
+    });
+  };
+
+  closeModal = () => {
+    this.setState({ errorModalActive: false });
+  };
+
   render() {
     return (
       <div>
         <Navbar />
+        <Modal
+          open={this.state.errorModalActive}
+          size="mini"
+          onClose={this.closeModal}
+          closeIcon
+        >
+          <Header icon="error" content="Validation Errors" />
+          <Modal.Content>{this.generateErrorMessages()}</Modal.Content>
+        </Modal>
+
         <Form onSubmit={this.handleSubmit}>
-        <Form.Field>
-          <label id="label">Station Name</label>
-          <input
+          <Form.Input
             type="text"
             id="name"
+            label="Station Name"
             placeholder="Station Name"
             onChange={this.handleChange}
-            value={this.state.name}
+            value={this.state.name.value}
           />
-        </Form.Field>
-        <Form.Field>
-          <label id="label">Location</label>
-          <input
+
+          <Form.Input
             type="text"
             id="location"
+            label="Location"
             placeholder="Location"
             onChange={this.handleChange}
-            value={this.state.location}
+            value={this.state.location.value}
           />
-        </Form.Field>
-        <Form.Field>
-          <label id="label">Code</label>
-          <input
+
+          <Form.Input
             type="text"
             id="code"
+            label="Code"
             placeholder="Station Code"
             onChange={this.handleChange}
-            value={this.state.code}
+            value={this.state.code.value}
           />
-        </Form.Field>
-        <Form.Field>
-          <label id="label">Password</label>
-          <input
+
+          <Form.Input
             type="password"
             id="password"
+            label="Password"
             placeholder="Password"
             onChange={this.handleChange}
-            value={this.state.password}
+            value={this.state.password.value}
           />
-        </Form.Field>
-        <Button id="button" type="submit">
-          Submit
-        </Button>
-      </Form>
+
+          <Button id="button" type="submit">
+            Submit
+          </Button>
+        </Form>
       </div>
     );
   }
