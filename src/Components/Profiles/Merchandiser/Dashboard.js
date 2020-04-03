@@ -151,9 +151,23 @@ class Dashboard extends Component {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data)
+        const brands = Array.from(new Set(data.map(req => req.brand)));
+        const result = brands.map(brand => {
+          const brandReqs = data.filter(req => req.brand === brand);
+          const reqSkus = [];
+          brandReqs.forEach(brandReq => {
+            if(brandReq.volume1){
+              reqSkus.push({ skuVol: `${brandReq.volume1} (${brandReq.sku})`, quantity: brandReq.quantity1 });
+            }
+            if(brandReq.volume2){
+              reqSkus.push({ skuVol: `${brandReq.volume2} (${brandReq.sku})`, quantity: brandReq.quantity2 });
+            }
+          });
+          return { name: brand, data: [...reqSkus] };
+        });
+        console.log(result);
        this.setState({
-         dynamicProducts: data
+         dynamicProducts: result
        });
       })
       .catch(err => console.log(err));
@@ -198,7 +212,7 @@ class Dashboard extends Component {
             <p>Click value to edit</p>
             <div id="merchtable">
               <Merchtable
-                products={this.state.products}
+                products={this.state.dynamicProducts}
                 setUpdate={this.setUpdate}
               />
             </div>

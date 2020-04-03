@@ -14,97 +14,24 @@ export default function Merchtable(props) {
 
       {props.products.map(prod => (
         <Table.Body>
-          <Table.Row>
-            <Table.Cell rowSpan="6">{prod.name}</Table.Cell>
-            <Table.Cell>{prod.mlone}</Table.Cell>
+          {prod.data.map((skuVolData,index) => (
+            <Table.Row>
+            {index === 0 ? <Table.Cell rowSpan={prod.data.length}>{prod.name}</Table.Cell> : null}
+            <Table.Cell>{skuVolData.skuVol}</Table.Cell>
             <Table.Cell className="dashboard-value">
               <input
                 type="text"
                 className="editstock"
-                id={prod.key}
-                value={prod.value}
+                id={`${skuVolData.skuVol}-${index}`}
+                value={skuVolData.quantity}
                 name="value"
                 onChange={e => {
-                  props.setUpdate(e.target.value, e.target.name, prod.key);
+                  //props.setUpdate(e.target.value, e.target.name, prod.key);
                 }}
               />
             </Table.Cell>
           </Table.Row>
-          <Table.Row>
-            <Table.Cell>{prod.mltwo}</Table.Cell>
-            <Table.Cell className="dashboard-value">
-              <input
-                type="text"
-                className="editstock"
-                id={prod.key}
-                value={prod.value2}
-                name="value2"
-                onChange={e => {
-                  props.setUpdate(e.target.value, e.target.name, prod.key);
-                }}
-              />
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>{prod.mlthree}</Table.Cell>
-            <Table.Cell className="dashboard-value">
-              <input
-                type="text"
-                className="editstock"
-                id={prod.key}
-                value={prod.value3}
-                name="value3"
-                onChange={e => {
-                  props.setUpdate(e.target.value, e.target.name, prod.key);
-                }}
-              />
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>{prod.mlfour}</Table.Cell>
-            <Table.Cell className="dashboard-value">
-              <input
-                type="text"
-                className="editstock"
-                id={prod.key}
-                value={prod.value4}
-                name="value4"
-                onChange={e => {
-                  props.setUpdate(e.target.value, e.target.name, prod.key);
-                }}
-              />
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>{prod.mlfive}</Table.Cell>
-            <Table.Cell className="dashboard-value">
-              <input
-                type="text"
-                className="editstock"
-                id={prod.key}
-                value={prod.value5}
-                name="value5"
-                onChange={e => {
-                  props.setUpdate(e.target.value, e.target.name, prod.key);
-                }}
-              />
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>{prod.mlsix}</Table.Cell>
-            <Table.Cell className="dashboard-value">
-              <input
-                type="text"
-                className="editstock"
-                id={prod.key}
-                value={prod.value6}
-                name="value6"
-                onChange={e => {
-                  props.setUpdate(e.target.value, e.target.name, prod.key);
-                }}
-              />
-            </Table.Cell>
-          </Table.Row>
+          ))}
         </Table.Body>
       ))}
     </Table>
