@@ -8,7 +8,7 @@ export default function Signuplink(props) {
       <ul id="ul">
         <li id="li">
           <NavLink to={props.link} id="signup">
-            Sign up as {props.text}
+            {props.text}
           </NavLink>
         </li>
       </ul>

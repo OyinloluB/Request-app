@@ -15,17 +15,27 @@ export default function Navbar() {
           <a className="item" id="item">
             <Dropdown
               text={"Sign in"}
-              merch={<Signinlink text={"merchandiser"} link={"/signinmerch"} />}
-              dist={<Signinlink text={"distributor"} link={"/signindist"} />}
-              admin={<Signinlink text={"admin"} link={"/signinadmin"} />}
+              merch={<Signinlink text={"Merchandiser"} link={"/signinmerch"} />}
+              dist={
+                <Signinlink
+                  text={"Distributor Developer"}
+                  link={"/signindist"}
+                />
+              }
+              admin={<Signinlink text={"Admin"} link={"/signinadmin"} />}
             />
           </a>
           <a className="item" id="item">
             <Dropdown
               text={"Sign up"}
-              merch={<Signuplink text={"merchandiser"} link={"/signupmerch"} />}
-              dist={<Signuplink text={"distributor"} link={"/signupdist"} />}
-              admin={<Signuplink text={"admin"} link={"/signupadmin"} />}
+              merch={<Signuplink text={"Merchandiser"} link={"/signupmerch"} />}
+              dist={
+                <Signuplink
+                  text={"Distributor Developer"}
+                  link={"/signupdist"}
+                />
+              }
+              admin={<Signuplink text={"Admin"} link={"/signupadmin"} />}
             />
           </a>
           <a className="active item" id="active">

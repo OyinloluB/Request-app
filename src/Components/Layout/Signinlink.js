@@ -8,7 +8,7 @@ export default function Signinlink(props) {
       <ul id="ul">
         <li id="li">
           <NavLink to={props.link} id="signin">
-            Sign in as a {props.text}
+            {props.text}
           </NavLink>
         </li>
       </ul>

@@ -17,6 +17,10 @@ class Signupformmerch extends Component {
     const field = { ...this.state[fieldName] };
 
     switch (fieldName) {
+      case "name":
+        field.valid = value !== "";
+        field.validation = field.valid ? "" : "Name cannot be empty";
+        break;
       case "password":
         field.valid = value.length >= 6;
         field.validation = field.valid ? "" : "Password is too short";
@@ -81,7 +85,8 @@ class Signupformmerch extends Component {
     return Object.keys(fields).map(fieldKey => {
       const field = this.state[fieldKey];
       if (!field.valid) {
-        return <p>{field.validation}</p>;
+        return <p id="valid-text"
+        >{field.validation}</p>;
       }
     });
   };
@@ -97,11 +102,14 @@ class Signupformmerch extends Component {
         <Modal
           open={this.state.errorModalActive}
           size="mini"
+          id="modal"
           onClose={this.closeModal}
           closeIcon
         >
           <Header icon="error" content="Validation Errors" />
-          <Modal.Content>{this.generateErrorMessages()}</Modal.Content>
+          <Modal.Content>
+            {this.generateErrorMessages()}
+          </Modal.Content>
         </Modal>
 
         <Form onSubmit={this.handleSubmit}>

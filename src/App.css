@@ -1,6 +1,13 @@
-/* #segment-height {
-  height: 100vh;
-} */
+#segment-height {
+  min-height: 100vh;
+}
+#valid-text {
+  color: #b31020;
+}
+#modal {
+  height: 30vh;
+  width: 50vw;
+}
 #active {
   background-color: #b31020;
   color: #fff;

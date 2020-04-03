@@ -20,11 +20,11 @@ class Signupformadmin extends Component {
     return (
       <Form onSubmit={this.handleSubmit}>
         <Form.Field>
-          <label id="label">Station Name</label>
+          <label id="label">Name</label>
           <input
             type="text"
             id="stationname"
-            placeholder="Station Name"
+            placeholder="Name"
             onChange={this.handleChange}
           />
         </Form.Field>

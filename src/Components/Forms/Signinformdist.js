@@ -43,10 +43,10 @@ class Signinformdist extends Component {
         <Navbar />
         <Form onSubmit={this.handleSubmit}>
           <Form.Field>
-            <label id="label">Station Name</label>
+            <label id="label">Name</label>
             <input
               type="text"
-              placeholder="Station Name"
+              placeholder="Name"
               id="name"
               onChange={this.handleChange}
               value={this.state.name}

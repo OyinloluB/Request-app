@@ -22,8 +22,8 @@ class Signinformadmin extends Component {
     return (
       <Form>
         <Form.Field>
-          <label id="label">Station Name</label>
-          <input placeholder="Station Name" />
+          <label id="label">Name</label>
+          <input placeholder="Name" />
         </Form.Field>
         <Form.Field>
           <label id="label">Station Code</label>
