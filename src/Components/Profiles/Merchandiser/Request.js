@@ -136,6 +136,7 @@ class Request extends Component {
         volume2: this.state.currentSku.data[1].volume,
         quantity2: this.state.currentSku.data[1].quantity
       };
+      console.log(requestData);
       fetch("https://ab-inbev-requestapp.herokuapp.com/Request", {
         method: "POST",
         mode: "no-cors",
@@ -143,7 +144,7 @@ class Request extends Component {
           Accept: "application/json",
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(requestData)
+        body: console.log(JSON.stringify(requestData))
       })
         .then(res => res.json())
         .then(data => {

@@ -1,73 +1,128 @@
 import React, { Component } from "react";
 import Navbar from "../Layout/Navbar";
-import { Button, Form } from "semantic-ui-react";
+import { Button, Form, Header, Icon, Modal } from "semantic-ui-react";
 
-// import { NavLink } from "react-router-dom";
-
-class Signinformmerch extends Component {
+class Signupformmerch extends Component {
   state = {
-    code: "",
-    password: ""
+    code: { valid: false, value: "", validation: "Code is required" },
+    password: { valid: false, value: "", validation: "Password is required" },
+    formIsValid: false,
+    errorModalActive: false
   };
   handleChange = e => {
+    const fieldName = e.target.id;
+    const value = e.target.value;
+    const field = { ...this.state[fieldName] };
+
+    switch (fieldName) {
+      case "password":
+        field.valid = value.length >= 6;
+        field.validation = field.valid ? "" : "Password is too short";
+        break;
+      default:
+        field.valid = value.length > 0;
+        field.validation = field.valid ? "" : `${fieldName} is required`;
+        break;
+    }
+    const { formIsValid, errorModalActive, ...fields } = this.state;
+    const isFormValid = Object.keys(fields).reduce((acc, fieldKey) => {
+      const field = this.state[fieldKey];
+      console.log(`${fieldKey}: ${field.valid}`);
+      return acc && field.valid;
+    }, true);
+    console.log(isFormValid);
     this.setState({
-      [e.target.id]: e.target.value
+      [fieldName]: { ...field, value },
+      formIsValid: isFormValid
     });
   };
+
   handleSubmit = e => {
     e.preventDefault();
-    let password = this.state.password;
-    let code = this.state.code;
+    if (!this.state.formIsValid) {
+      console.log(this.state.formIsValid);
+      this.setState({ errorModalActive: true });
+      return;
+    }
+    let code = this.state.code.value;
+    let password = this.state.password.value;
+
+    console.log(code);
+    console.log(password);
 
     fetch("https://ab-inbev-requestapp.herokuapp.com/merchandiser_login", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
-        password: password,
-        code: code
+        code: code,
+        password: password
       })
     })
       .then(res => res.json())
       .then(data => {
         this.props.toggleMerchandiser(true);
-        this.props.history.push("/dashboard/");
+        this.props.history.push("/dashboard");
       })
       .catch(err => console.log(err));
   };
+  generateErrorMessages = () => {
+    const { formIsValid, errorModalActive, ...fields } = this.state;
+    return Object.keys(fields).map(fieldKey => {
+      const field = this.state[fieldKey];
+      if (!field.valid) {
+        return <p id="valid-text">{field.validation}</p>;
+      }
+    });
+  };
+
+  closeModal = () => {
+    this.setState({ errorModalActive: false });
+  };
+
   render() {
     return (
       <div>
         <Navbar />
+        <Modal
+          open={this.state.errorModalActive}
+          size="mini"
+          id="modal"
+          onClose={this.closeModal}
+          closeIcon
+        >
+          <Header icon="error" content="Validation Errors" />
+          <Modal.Content>{this.generateErrorMessages()}</Modal.Content>
+        </Modal>
+
         <Form onSubmit={this.handleSubmit}>
-          <Form.Field>
-            <label id="label">Station Code</label>
-            <input
-              type="text"
-              value={this.state.code}
-              placeholder="Station Code"
-              id="code"
-              onChange={this.handleChange}
-            />
-          </Form.Field>
-          <Form.Field>
-            <label id="label">Password</label>
-            <input
-              type="password"
-              value={this.state.password}
-              placeholder="Password"
-              id="password"
-              onChange={this.handleChange}
-            />
-          </Form.Field>
-          {/* <NavLink to="/dashboard/request"> */}
+          <Form.Input
+            type="text"
+            id="code"
+            label="Code"
+            placeholder="Station Code"
+            onChange={this.handleChange}
+            value={this.state.code.value}
+          />
+
+          <Form.Input
+            type="password"
+            id="password"
+            label="Password"
+            placeholder="Password"
+            onChange={this.handleChange}
+            value={this.state.password.value}
+          />
+
           <Button id="button" type="submit">
-            Submit
+            Sign In
           </Button>
-          {/* </NavLink> */}
         </Form>
       </div>
     );
   }
 }
 
-export default Signinformmerch;
+export default Signupformmerch;

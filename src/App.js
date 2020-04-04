@@ -112,8 +112,16 @@ class App extends Component {
               component={SidebarAdmin}
               logout={this.logout.bind(this)}
             />
-            <PropsRoute path="/signinadmin" component={Signinformadmin} />
-            <PropsRoute path="/signupadmin" component={Signupformadmin} />
+            <PropsRoute
+              toggleAdmin={this.toggleAdmin.bind(this)}
+              path="/signinadmin"
+              component={Signinformadmin}
+            />
+            <PropsRoute
+              toggleAdmin={this.toggleAdmin.bind(this)}
+              path="/signupadmin"
+              component={Signupformadmin}
+            />
           </Switch>
           {/* <Updatestock /> */}
         </div>

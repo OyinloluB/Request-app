@@ -150,7 +150,7 @@ class Signupformmerch extends Component {
           />
 
           <Button id="button" type="submit">
-            Submit
+            Sign up
           </Button>
         </Form>
       </div>

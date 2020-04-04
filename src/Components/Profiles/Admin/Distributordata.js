@@ -2,7 +2,33 @@ import React, { Component } from "react";
 import { Table } from "semantic-ui-react";
 
 class Distributordata extends Component {
-  state = {};
+  constructor(props) {
+    super(props);
+    this.state = {
+      error: null,
+      isLoaded: false,
+      items: []
+    };
+  }
+
+  componentDidMount() {
+    fetch("https://ab-inbev-requestapp.herokuapp.com/")
+      .then(res => res.json())
+      .then(
+        result => {
+          this.setState({
+            isLoaded: true,
+            items: result.items
+          });
+        },
+        error => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
+        }
+      );
+  }
   render() {
     return (
       <Table singleLine>
@@ -21,18 +47,6 @@ class Distributordata extends Component {
             <Table.Cell>September 14, 2013</Table.Cell>
             <Table.Cell>jhlilk22@yahoo.com</Table.Cell>
             <Table.Cell>No</Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>Jamie Harington</Table.Cell>
-            <Table.Cell>January 11, 2014</Table.Cell>
-            <Table.Cell>jamieharingonton@yahoo.com</Table.Cell>
-            <Table.Cell>Yes</Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>Jill Lewis</Table.Cell>
-            <Table.Cell>May 11, 2014</Table.Cell>
-            <Table.Cell>jilsewris22@yahoo.com</Table.Cell>
-            <Table.Cell>Yes</Table.Cell>
           </Table.Row>
         </Table.Body>
       </Table>
