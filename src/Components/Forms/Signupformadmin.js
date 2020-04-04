@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Navbar from "../Layout/Navbar";
-import { Button, Form, Header, Icon, Modal } from "semantic-ui-react";
+import { Button, Form, Header, Modal } from "semantic-ui-react";
 
 class Signupformadmin extends Component {
   state = {
@@ -29,52 +29,52 @@ class Signupformadmin extends Component {
         field.validation = field.valid ? "" : `${fieldName} is required`;
         break;
     }
-    const { formIsValid, errorModalActive, ...fields } = this.state;
-    const isFormValid = Object.keys(fields).reduce((acc, fieldKey) => {
-      const field = this.state[fieldKey];
-      console.log(`${fieldKey}: ${field.valid}`);
-      return acc && field.valid;
-    }, true);
-    console.log(isFormValid);
+
     this.setState({
-      [fieldName]: { ...field, value },
-      formIsValid: isFormValid
+      [fieldName]: { ...field, value }
     });
   };
 
+  validateForm = () => {
+		return new Promise((resolve, reject) => {
+			const {formIsValid, errorModalActive, ...fields} = this.state;
+			const isFormValid = Object.keys(fields).reduce((acc, fieldKey) => {
+				const field = this.state[fieldKey];
+				return acc && field.valid;
+			}, true);
+      this.setState({formIsValid: isFormValid});
+      resolve();
+		});
+	};
+
   handleSubmit = e => {
     e.preventDefault();
-    if (!this.state.formIsValid) {
-      console.log(this.state.formIsValid);
-      this.setState({ errorModalActive: true });
-      return;
-    }
-    let username = this.state.username.value;
-    // let location = this.state.location.value;
-    let password = this.state.password.value;
-
-    console.log(username);
-    // console.log(location);
-    console.log(password);
-
-    fetch("https://ab-inbev-requestapp.herokuapp.com/Admin", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: username,
-        // location: location,
-        password: password,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        this.props.toggleAdmin(true);
-        this.props.history.push("/distributor/");
+    this.validateForm().then(() => {
+      if (!this.state.formIsValid) {
+        this.setState({ errorModalActive: true });
+        return;
+      }
+      let username = this.state.username.value;
+      let password = this.state.password.value;
+  
+      fetch("https://ab-inbev-requestapp.herokuapp.com/Admin", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password,
+        }),
       })
-      .catch((err) => console.log(err));
+        .then((res) => res.json())
+        .then((data) => {
+          this.props.toggleAdmin(true);
+          this.props.history.push("/distributor/");
+        })
+        .catch((err) => console.log(err));
+    })
   };
   generateErrorMessages = () => {
     const { formIsValid, errorModalActive, ...fields } = this.state;
@@ -114,15 +114,6 @@ class Signupformadmin extends Component {
             onChange={this.handleChange}
             value={this.state.username.value}
           />
-
-          {/* <Form.Input
-            type="text"
-            id="location"
-            label="Location"
-            placeholder="Location"
-            onChange={this.handleChange}
-            value={this.state.location.value}
-          /> */}
 
           <Form.Input
             type="password"

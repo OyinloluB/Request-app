@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Navbar from "../Layout/Navbar";
-import { Button, Form, Header, Icon, Modal } from "semantic-ui-react";
+import { Button, Form, Header, Modal } from "semantic-ui-react";
 
 class Signupformmerch extends Component {
   state = {
@@ -30,55 +30,56 @@ class Signupformmerch extends Component {
         field.validation = field.valid ? "" : `${fieldName} is required`;
         break;
     }
-    const { formIsValid, errorModalActive, ...fields } = this.state;
-    const isFormValid = Object.keys(fields).reduce((acc, fieldKey) => {
-      const field = this.state[fieldKey];
-      console.log(`${fieldKey}: ${field.valid}`);
-      return acc && field.valid;
-    }, true);
-    console.log(isFormValid);
+
     this.setState({
-      [fieldName]: { ...field, value },
-      formIsValid: isFormValid
+      [fieldName]: { ...field, value }
     });
   };
 
+  validateForm = () => {
+		return new Promise((resolve, reject) => {
+			const {formIsValid, errorModalActive, ...fields} = this.state;
+			const isFormValid = Object.keys(fields).reduce((acc, fieldKey) => {
+				const field = this.state[fieldKey];
+				return acc && field.valid;
+			}, true);
+      this.setState({formIsValid: isFormValid});
+      resolve();
+		});
+	};
+
   handleSubmit = e => {
     e.preventDefault();
-    if (!this.state.formIsValid) {
-      console.log(this.state.formIsValid);
-      this.setState({ errorModalActive: true });
-      return;
-    }
-    let name = this.state.name.value;
-    let location = this.state.location.value;
-    let code = this.state.code.value;
-    let password = this.state.password.value;
-
-    console.log(name);
-    console.log(location);
-    console.log(code);
-    console.log(password);
-
-    fetch("https://ab-inbev-requestapp.herokuapp.com/Merchandiser", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        name: name,
-        location: location,
-        code: code,
-        password: password
+    this.validateForm().then(() => {
+      if (!this.state.formIsValid) {
+        this.setState({ errorModalActive: true });
+        return;
+      }
+      let name = this.state.name.value;
+      let location = this.state.location.value;
+      let code = this.state.code.value;
+      let password = this.state.password.value;
+  
+      fetch("https://ab-inbev-requestapp.herokuapp.com/Merchandiser", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name: name,
+          location: location,
+          code: code,
+          password: password
+        })
       })
+        .then(res => res.json())
+        .then(data => {
+          this.props.toggleMerchandiser(true);
+          this.props.history.push("/dashboard");
+        })
+        .catch(err => console.log(err));
     })
-      .then(res => res.json())
-      .then(data => {
-        this.props.toggleMerchandiser(true);
-        this.props.history.push("/dashboard");
-      })
-      .catch(err => console.log(err));
   };
   generateErrorMessages = () => {
     const { formIsValid, errorModalActive, ...fields } = this.state;
