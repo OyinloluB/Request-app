@@ -6,16 +6,14 @@ const SegmentExampleSegment = () => (
         <Grid columns={3} stackable id="grid">
             <Grid.Row id="footer-content">
                 <Grid.Column>
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                    Aenean commodo ligula eget dolor. Aenean massa.</p>
+                    <p>www.internationalbreweriesplc.com</p>
                 </Grid.Column>
                 <Grid.Column>
-                    <p>Lorem ipsum dolor sit amet</p>
-                    <p>Aenean commodo ligula eget dolor.</p>
-                    <p>Aenean massa. Cum sociis natoque</p>
+                    <p>Anuoluwapo: 0906-251-4232</p>
+                    <p>Titi: 0701-587-3784</p>
                 </Grid.Column>
                 <Grid.Column>
-                    <p>Lorem ipsum dolor sit amet</p>
+                <p>Address: 22/36 Glover Road, Ikoyi-Lagos</p>
                 </Grid.Column>
             </Grid.Row>
         </Grid>
