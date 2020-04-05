@@ -2,6 +2,39 @@ import React from "react";
 import {Table} from "semantic-ui-react";
 
 export default function Merchtable(props) {
+	const buildInput = (brand, skuVolData) => {
+		if (!props.handleQuantityChange) {
+			return (
+				<input
+					type="number"
+					min="0"
+					className="editstock"
+					id={`${skuVolData.name}-${skuVolData.volume}`}
+					value={skuVolData.quantity}
+					name="value"
+				/>
+			);
+		} else {
+			return (
+				<input
+					type="number"
+					min="0"
+					className="editstock"
+					id={`${skuVolData.name}-${skuVolData.volume}`}
+					defaultValue={skuVolData.quantity}
+					name="value"
+					onChange={(e) =>
+						props.handleQuantityChange(e, {
+							brand: brand,
+							sku: skuVolData.sku,
+							volume: skuVolData.volume,
+						})
+					}
+				/>
+			);
+		}
+	};
+
 	return (
 		<Table celled structured id="stocktable">
 			<Table.Header>
@@ -21,21 +54,7 @@ export default function Merchtable(props) {
 							) : null}
 							<Table.Cell>{`${skuVolData.volume}ml (${skuVolData.sku})`}</Table.Cell>
 							<Table.Cell className="dashboard-value">
-								<input
-									type="number"
-									min="0"
-									className="editstock"
-									id={`${skuVolData.name}-${skuVolData.volume}`}
-									defaultValue={skuVolData.quantity}
-									name="value"
-									onChange={(e) =>
-										props.handleQuantityChange(e, {
-											brand: prod.name,
-											sku: skuVolData.sku,
-											volume: skuVolData.volume,
-										})
-									}
-								/>
+								{buildInput(prod.name, skuVolData)}
 							</Table.Cell>
 						</Table.Row>
 					))}

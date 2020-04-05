@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import Navbar from "../Layout/Navbar";
 import {Button, Form, Header, Modal} from "semantic-ui-react";
 
-class Signupformmerch extends Component {
+class Signinformmerch extends Component {
 	state = {
 		code: {valid: false, value: "", validation: "Code is required"},
 		password: {valid: false, value: "", validation: "Password is required"},
@@ -127,4 +127,4 @@ class Signupformmerch extends Component {
 	}
 }
 
-export default Signupformmerch;
+export default Signinformmerch;

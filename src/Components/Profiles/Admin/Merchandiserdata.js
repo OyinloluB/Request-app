@@ -1,39 +1,62 @@
 import React, { Component } from "react";
-import { Table } from "semantic-ui-react";
+import { Table, Button } from "semantic-ui-react";
 
 class Merchandiserdata extends Component {
-  state = {};
+  state = {
+		error: null,
+		isLoaded: false,
+		items: [],
+	};
+
+	componentDidMount() {
+		fetch("https://ab-inbev-requestapp.herokuapp.com/Merchandiser", {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		})
+			.then((res) => res.json())
+			.then((result) => {
+				this.setState({
+					isLoaded: true,
+					items: result
+				});
+			})
+			.catch((error) => {
+				this.setState({
+					isLoaded: true,
+					error,
+				});
+			});
+  }
+  
+  goToStockLevel = () => {
+    this.props.history.push('/distributor/merchandiser/stock-level');
+  }
+
   render() {
     return (
       <Table singleLine>
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell>Name</Table.HeaderCell>
-            <Table.HeaderCell>Registration Date</Table.HeaderCell>
-            <Table.HeaderCell>E-mail address</Table.HeaderCell>
-            <Table.HeaderCell>Premium Plan</Table.HeaderCell>
+            <Table.HeaderCell>Station Name</Table.HeaderCell>
+            <Table.HeaderCell>Station Code</Table.HeaderCell>
+            <Table.HeaderCell>Station Location</Table.HeaderCell>
+            <Table.HeaderCell>View Stock</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
 
         <Table.Body>
-          <Table.Row>
-            <Table.Cell>John Lilki</Table.Cell>
-            <Table.Cell>September 14, 2013</Table.Cell>
-            <Table.Cell>jhlilk22@yahoo.com</Table.Cell>
-            <Table.Cell>No</Table.Cell>
+        {this.state.items.map(item => (
+          <Table.Row key={item._id}>
+            <Table.Cell>{item.name}</Table.Cell>
+            <Table.Cell>{item.code}</Table.Cell>
+            <Table.Cell>{item.location}</Table.Cell>
+            <Table.Cell>
+              <Button icon="eye" onClick={this.goToStockLevel} />
+            </Table.Cell>
           </Table.Row>
-          <Table.Row>
-            <Table.Cell>Jamie Harington</Table.Cell>
-            <Table.Cell>January 11, 2014</Table.Cell>
-            <Table.Cell>jamieharingonton@yahoo.com</Table.Cell>
-            <Table.Cell>Yes</Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>Jill Lewis</Table.Cell>
-            <Table.Cell>May 11, 2014</Table.Cell>
-            <Table.Cell>jilsewris22@yahoo.com</Table.Cell>
-            <Table.Cell>Yes</Table.Cell>
-          </Table.Row>
+        ))}
         </Table.Body>
       </Table>
     );

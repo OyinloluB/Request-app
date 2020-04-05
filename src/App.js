@@ -22,9 +22,9 @@ const ProtectedRoute = ({ path, component: Comp, auth, exact, to, ...props }) =>
   <Route
     path={path}
     exact={!!exact}
-    render={() =>
+    render={(routeProps) =>
       auth ? (
-        <Comp isLoggedIn={auth} {...props} />
+        <Comp isLoggedIn={auth} {...props} {...routeProps} />
       ) : (
         <Redirect to={to || "/"} />
       )

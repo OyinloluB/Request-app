@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import Navbar from "../Layout/Navbar";
 import {Button, Form, Header, Icon, Modal} from "semantic-ui-react";
 
-class Signupformadmin extends Component {
+class Signinformadmin extends Component {
 	state = {
 		username: {valid: false, value: "", validation: "Name is required"},
 		password: {valid: false, value: "", validation: "Password is required"},
@@ -69,8 +69,10 @@ class Signupformadmin extends Component {
 			})
 				.then((res) => res.json())
 				.then((data) => {
-					this.props.toggleAdmin(true);
-					this.props.history.push("/distributor/");
+					if (data.username) {
+						this.props.toggleAdmin(true);
+						this.props.history.push("/distributor/");
+					}
 				})
 				.catch((err) => console.log(err));
 		});
@@ -132,4 +134,4 @@ class Signupformadmin extends Component {
 	}
 }
 
-export default Signupformadmin;
+export default Signinformadmin;

@@ -236,26 +236,36 @@ class Dashboard extends Component {
 			});
 			changedSkus.forEach((sku) => {
 				const skusData = prod.data.filter((data) => data.sku === sku);
-        const vol1Info = skusData.filter((data) => data.volNo === 1)[0];
-        const vol2Info = skusData.filter((data) => data.volNo === 2)[0];
+				const vol1Info = skusData.filter((data) => data.volNo === 1)[0];
+				const vol2Info = skusData.filter((data) => data.volNo === 2)[0];
 				const changedSkusData = changedData.filter((data) => data.sku === sku);
 				changedSkusData.forEach((skuData) => {
-					requestsData.push({
+					let reqData = {
 						brand: prod.name,
 						sku: sku,
-						volume1: skuData.volume1 !== undefined
-							? `${skuData.volume1}ml`
-							: `${vol1Info.volume}ml`,
-						quantity1: skuData.quantity1 !== undefined
-							? skuData.quantity1
-							: vol1Info.quantity,
-						volume2: skuData.volume2 !== undefined
-							? `${skuData.volume2}ml`
-							: `${vol2Info.volume}ml`,
-						quantity2: skuData.quantity2 !== undefined
-							? skuData.quantity2
-							: vol2Info.quantity,
-					});
+						volume1:
+							skuData.volume1 !== undefined
+								? `${skuData.volume1}ml`
+								: `${vol1Info.volume}ml`,
+						quantity1:
+							skuData.quantity1 !== undefined
+								? skuData.quantity1
+								: vol1Info.quantity,
+					};
+					if (vol2Info) {
+						reqData = {
+							...reqData,
+							volume2:
+								skuData.volume2 !== undefined
+									? `${skuData.volume2}ml`
+									: `${vol2Info.volume}ml`,
+							quantity2:
+								skuData.quantity2 !== undefined
+									? skuData.quantity2
+									: vol2Info.quantity,
+						};
+					}
+					requestsData.push(reqData);
 				});
 			});
 		});
@@ -263,17 +273,26 @@ class Dashboard extends Component {
 	};
 
 	handleSubmit = () => {
-    const requestsData = this.generateReqData();
-		const requests = requestsData.map((reqData) => {
+		const requestsData = this.generateReqData();
+		const updateStockLevels = requestsData.map((reqData) => {
 			return fetch("https://ab-inbev-requestapp.herokuapp.com/stockLevel", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify(reqData),
-			});
+			}).then((res) => res.json());
 		});
-		Promise.all(requests)
+
+		Promise.all(updateStockLevels)
+			.then(() => {
+				return fetch("https://ab-inbev-requestapp.herokuapp.com/stockLevel", {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+					},
+				}).then((res) => res.json());
+			})
 			.then((data) => {
 				const brands = Array.from(new Set(data.map((req) => req.brand)));
 				this.setState({
@@ -302,7 +321,9 @@ class Dashboard extends Component {
 								handleQuantityChange={this.handleQuantityChange}
 							/>
 						</div>
-						<button id="button" onClick={this.handleSubmit}>Submit</button>
+						<button id="button" onClick={this.handleSubmit}>
+							Submit
+						</button>
 					</div>
 					<div id="bar">
 						<h6>Latest request status</h6>
