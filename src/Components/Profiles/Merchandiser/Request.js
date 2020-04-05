@@ -128,20 +128,25 @@ class Request extends Component {
       true
     );
     if (quantityIsValid) {
-      const requestData = {
+      let requestData = {
         brand: this.state.currentProduct.name,
         sku: this.state.currentSku.type,
         volume1: this.state.currentSku.data[0].volume,
-        quantity1: this.state.currentSku.data[0].quantity,
-        volume2: this.state.currentSku.data[1].volume,
-        quantity2: this.state.currentSku.data[1].quantity
+        quantity1: this.state.currentSku.data[0].quantity
       };
+      if (this.state.currentSku.data.length > 1) {
+        requestData = {
+          ...requestData,
+          volume2: this.state.currentSku.data[1].volume,
+          quantity2: this.state.currentSku.data[1].quantity
+        };
+      }
       console.log(requestData);
       fetch("https://ab-inbev-requestapp.herokuapp.com/Request", {
         method: "POST",
-        mode: "no-cors",
+        // mode: "no-cors",
         headers: {
-          Accept: "application/json",
+          // Accept: "application/json",
           "Content-Type": "application/json"
         },
         body: JSON.stringify(requestData)

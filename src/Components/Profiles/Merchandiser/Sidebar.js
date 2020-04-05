@@ -3,7 +3,7 @@ import { Sidebar, Segment, Button, Menu } from "semantic-ui-react";
 import { Route, NavLink } from "react-router-dom";
 import Dashboard from "../Merchandiser/Dashboard";
 import Request from "../Merchandiser/Request";
-import Editdetails from "../Merchandiser/Editdetails";
+// import Editdetails from "../Merchandiser/Editdetails";
 
 class SidebarLeftScaleDown extends Component {
   state = {
@@ -35,9 +35,9 @@ class SidebarLeftScaleDown extends Component {
             <Menu.Item name="gamepad">
               <NavLink to="/dashboard/request">Make Request</NavLink>
             </Menu.Item>
-            <Menu.Item name="camera">
+            {/* <Menu.Item name="camera">
               <NavLink to="/dashboard/editdetails">Edit details</NavLink>
-            </Menu.Item>
+            </Menu.Item> */}
             <Menu.Item name="camera" onClick={this.props.logout}>
               Log Out
             </Menu.Item>
@@ -46,7 +46,7 @@ class SidebarLeftScaleDown extends Component {
             <Segment basic id="segment-height">
               <Route exact path="/dashboard/" component={Dashboard} />
               <Route path="/dashboard/request" component={Request} />
-              <Route path="/dashboard/editdetails" component={Editdetails} />
+              {/* <Route path="/dashboard/editdetails" component={Editdetails} /> */}
             </Segment>
           </Sidebar.Pusher>
         </Sidebar.Pushable>
