@@ -8,6 +8,9 @@
   height: 30vh;
   width: 50vw;
 }
+#sidebar {
+  width: 30vw;
+}
 #active {
   background-color: #b31020;
   color: #fff;
@@ -123,6 +126,9 @@ form {
 .editstock {
   width: 100%;
 }
+#position {
+  right: auto;
+}
 #makerequest {
   display: flex;
   align-items: center;
@@ -181,4 +187,10 @@ form {
   width: 120px;
   padding: 20px;
   border: 1px solid #b31020;
+}
+
+@media screen and (max-width: 420px){
+  #sidebar {
+    width: 50vw;
+  }
 }

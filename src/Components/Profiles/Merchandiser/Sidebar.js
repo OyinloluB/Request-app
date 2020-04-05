@@ -23,6 +23,7 @@ class SidebarLeftScaleDown extends Component {
             as={Menu}
             animation="scale down"
             width="thin"
+            id="sidebar"
             visible={visible}
             icon="labeled"
             vertical

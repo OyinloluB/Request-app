@@ -4,7 +4,7 @@ import Merchtable from "../Merchandiser/Merchtable";
 
 class Dashboard extends Component {
 	state = {
-		percent: 33,
+		// percent: 33,
 		serverProds: [],
 		products: [],
 		// products: [
@@ -325,12 +325,12 @@ class Dashboard extends Component {
 							Submit
 						</Button>
 					</div>
-					<div id="bar">
+					{/* <div id="bar">
 						<h6>Latest request status</h6>
 						<div id="progress-bar">
 							<Progress id="progress" percent={this.state.percent} indicating />
 						</div>
-					</div>
+					</div> */}
 				</div>
 			</div>
 		);
