@@ -36,7 +36,7 @@ class Merchandiserdata extends Component {
 
   render() {
     return (
-      <Table singleLine>
+      <Table unstackable singleLine>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Station Name</Table.HeaderCell>

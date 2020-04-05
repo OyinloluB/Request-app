@@ -144,7 +144,7 @@ class Request extends Component {
           Accept: "application/json",
           "Content-Type": "application/json"
         },
-        body: console.log(JSON.stringify(requestData))
+        body: JSON.stringify(requestData)
       })
         .then(res => res.json())
         .then(data => {

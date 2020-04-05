@@ -36,7 +36,7 @@ export default function Merchtable(props) {
 	};
 
 	return (
-		<Table celled structured id="stocktable">
+		<Table celled structured unstackable id="stocktable">
 			<Table.Header>
 				<Table.Row>
 					<Table.HeaderCell rowSpan="2">Brand</Table.HeaderCell>

@@ -321,9 +321,9 @@ class Dashboard extends Component {
 								handleQuantityChange={this.handleQuantityChange}
 							/>
 						</div>
-						<button id="button" onClick={this.handleSubmit}>
+						<Button id="button" onClick={this.handleSubmit}>
 							Submit
-						</button>
+						</Button>
 					</div>
 					<div id="bar">
 						<h6>Latest request status</h6>

@@ -1,169 +1,245 @@
 import React, { Component } from "react";
-import { Input, Button, Form } from "semantic-ui-react";
-// import Eachrequest from "./Eachrequest";
+import { Button, Select, Form, Input } from "semantic-ui-react";
 
 class AdminRequest extends Component {
   state = {
-    request: [],
-    currentRequest: {
-      product: "",
-      // rgb: "",
-      // pet: "",
-      // can: "",
-      quantity: "",
-      rgbvalue: "",
-      canvalue: "",
-      petvalue: "",
-      key: ""
+    requests: [
+      {
+        id: 1,
+        name: "Budweiser",
+        rgb: [
+          { volume: 375, quantity: "" },
+          { volume: 600, quantity: "" }
+        ],
+        can: [
+          { volume: 330, quantity: "" },
+          { volume: 500, quantity: "" }
+        ]
+      },
+      {
+        id: 2,
+        name: "Castle Lite",
+        rgb: [
+          { volume: 375, quantity: "" },
+          { volume: 600, quantity: "" }
+        ]
+      },
+      {
+        id: 3,
+        name: "Trophy Stout",
+        rgb: [{ volume: 600, quantity: "" }]
+      },
+      {
+        id: 4,
+        name: "Hero",
+        rgb: [
+          { volume: 375, quantity: "" },
+          { volume: 600, quantity: "" }
+        ],
+        can: [
+          { volume: 330, quantity: "" },
+          { volume: 500, quantity: "" }
+        ]
+      },
+      {
+        id: 5,
+        name: "Trophy",
+        rgb: [
+          { volume: 375, quantity: "" },
+          { volume: 600, quantity: "" }
+        ],
+        can: [
+          { volume: 330, quantity: "" },
+          { volume: 500, quantity: "" }
+        ]
+      },
+      {
+        id: 6,
+        name: "Eagle Lager",
+        rgb: [
+          { volume: 330, quantity: "" },
+          { volume: 600, quantity: "" }
+        ]
+      },
+      {
+        id: 7,
+        name: "Eagle Stout",
+        rgb: [
+          { volume: 330, quantity: "" },
+          { volume: 600, quantity: "" }
+        ]
+      },
+      {
+        id: 8,
+        name: "Grand Malt",
+        rgb: [{ volume: 330, quantity: "" }],
+        can: [{ volume: 330, quantity: "" }],
+        pet: [
+          { volume: 250, quantity: "" },
+          { volume: 330, quantity: "" }
+        ]
+      },
+      {
+        id: 9,
+        name: "Beta Malt",
+        rgb: [{ volume: 330, quantity: "" }],
+        can: [{ volume: 330, quantity: "" }],
+        pet: [
+          { volume: 250, quantity: "" },
+          { volume: 330, quantity: "" }
+        ]
+      }
+    ],
+    currentProduct: {},
+    currentSku: {}
+  };
+
+  handleProductChange = (e, { value }) => {
+    const product = this.state.requests.filter(
+      request => request.id === value
+    )[0];
+    const sku = { requestId: value, type: "rgb", data: product.rgb };
+    this.setState({ currentProduct: { ...product }, currentSku: { ...sku } });
+  };
+
+  handleQuantity = (value, volume) => {
+    const currentSkuData = this.state.currentSku.data.map(skuDataItem => {
+      if (skuDataItem.volume === volume) {
+        skuDataItem.quantity = value;
+      }
+      return skuDataItem;
+    });
+    this.setState(prevState => ({
+      currentSku: {
+        ...prevState.currentSku,
+        data: [...currentSkuData]
+      }
+    }));
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+    const quantityIsValid = this.state.currentSku.data.reduce(
+      (acc, skuItem) => {
+        return (
+          skuItem.quantity !== "" && !Number(skuItem.quantity).isNaN && acc
+        );
+      },
+      true
+    );
+    if (quantityIsValid) {
+      const requestData = {
+        brand: this.state.currentProduct.name,
+        sku: this.state.currentSku.type,
+        volume1: this.state.currentSku.data[0].volume,
+        quantity1: this.state.currentSku.data[0].quantity,
+        volume2: this.state.currentSku.data[1].volume,
+        quantity2: this.state.currentSku.data[1].quantity
+      };
+      console.log(requestData);
+      fetch("https://ab-inbev-requestapp.herokuapp.com/Request", {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(requestData)
+      })
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+        })
+        .catch(err => console.log(err));
     }
   };
-  handleChange = e => {
-    //You want to know which input is calling handleChange
 
-    let currentRequest = this.state.currentRequest;
-
-    currentRequest[e.target.name] = e.target.value;
-
+  handleSkuChange = (e, { value }) => {
     this.setState({
-      currentRequest: currentRequest
-    });
-  };
-
-  handleSubmit = event => {
-    event.preventDefault();
-    const newReq = this.state.currentRequest;
-    console.log(newReq);
-    if (
-      newReq.product ||
-      newReq.rgb ||
-      newReq.pet ||
-      newReq.can ||
-      newReq.quantity !== ""
-    ) {
-      const request = [...this.state.request, newReq];
-
-      this.setState({
-        request: request
-      });
-      fetch("https://ab-inbev-requestapp.herokuapp.com/Request");
-    }
-  };
-  deleteRequest = key => {
-    const filteredRequest = this.state.request.filter(req => req.key !== key);
-    this.setState({
-      request: filteredRequest
-    });
-  };
-  setUpdate = (product, key) => {
-    const requests = this.state.request;
-    requests.map(req => {
-      if (req.key === key) {
-        req.product = product;
+      currentSku: {
+        requestId: this.state.currentProduct.id,
+        type: value,
+        data: [...this.state.currentProduct[value]]
       }
     });
-    this.setState({
-      request: requests
-    });
   };
-  render() {
-    return (
-      <div class="ui container" id="container">
-        {/* <Eachrequest
-          request={this.state.request}
-          deleteRequest={this.deleteRequest}
-          setUpdate={this.setUpdate}
-        /> */}
 
-        <Form onSubmit={this.handleSubmit}>
-          <div id="selectprod">
-            <h6>Select Product</h6>
-            <Input
-              id="input"
-              autocomplete="off"
-              name="product"
-              list="products"
-              onChange={this.handleChange}
-              placeholder="Select Products..."
-            />
-            <datalist id="products">
-              <option value="Budweiser" />
-              <option value="Castle Lite" />
-              <option value="Hero" />
-              <option value="Beta Malt" />
-              <option value="Trophy" />
-              <option value="Trophy Stout" />
-              <option value="Eagle Lager" />
-              <option value="Eagle Stout" />
-            </datalist>
-            &nbsp;&nbsp;
-            <br />
-            <div id="measurement">
-              <Input
-                id="input"
-                autocomplete="off"
-                list="rgb"
-                name="rgb"
-                onChange={this.handleChange}
-                placeholder="RGB"
+  render() {
+    const products = this.state.requests.map(request => {
+      return {
+        key: request.id,
+        value: request.id,
+        text: request.name
+      };
+    });
+
+    const requestFields = (currentProduct, currentSku) => {
+      if (Object.keys(currentProduct).length < 1) {
+        return null;
+      } else {
+        const { id, name, ...skusObj } = currentProduct;
+        const skus = Object.keys(skusObj).map(sku => {
+          return { key: sku, value: sku, text: sku.toUpperCase() };
+        });
+        const skuFields = currentSku.data.map(skuField => {
+          return (
+            <div key={skuField.volume}>
+              <h6>Select Volume</h6>
+              <Select
+                placeholder="Volume"
+                options={[
+                  {
+                    key: skuField.volume,
+                    value: skuField.volume,
+                    text: `${skuField.volume}ml`
+                  }
+                ]}
+                defaultValue={skuField.volume}
               />
-              <datalist id="sku">
-                <option value="RGB" />
-                <option value="CAN" />
-                <option value="PET" />
-              </datalist>
-              &nbsp;&nbsp;
+              &nbsp; &nbsp;
               <Input
-                id="prod-no"
-                autocomplete="off"
-                name="rgbvalue"
-                onChange={this.handleChange}
-                placeholder="Input Value..."
+                placeholder="Quantity..."
+                value={skuField.quantity}
+                onChange={(e, { value }) =>
+                  this.handleQuantity(value, skuField.volume)
+                }
               />
               <br />
-              <Input
-                id="input"
-                autocomplete="off"
-                onChange={this.handleChange}
-                name="can"
-                list="can"
-                placeholder="CAN"
-              />
-              <datalist id="rgb">
-                <option value="375ml" />
-                <option value="600ml" />
-              </datalist>
-              &nbsp;&nbsp;
-              <Input
-                id="prod-no"
-                autocomplete="off"
-                name="canvalue"
-                onChange={this.handleChange}
-                placeholder="Input Value..."
-              />
               <br />
-              <Input
-                id="input"
-                autocomplete="off"
-                onChange={this.handleChange}
-                name="pet"
-                list="pet"
-                placeholder="PET"
-              />
-              <datalist id="pet">
-                <option value="250ml" />
-                <option value="330ml" />
-              </datalist>
-              &nbsp;&nbsp;
-              <Input
-                id="prod-no"
-                autocomplete="off"
-                name="petvalue"
-                onChange={this.handleChange}
-                placeholder="Input Value..."
-              />
             </div>
+          );
+        });
+        return (
+          <div key={currentSku.type}>
+            <h6>Select SKU</h6>
+            <Select
+              placeholder="SKU"
+              options={skus}
+              defaultValue={currentSku.type}
+              onChange={this.handleSkuChange}
+            />
+            <br />
+            <br />
+            {skuFields}
           </div>
-          <Button id="button">Submit</Button>
+        );
+      }
+    };
+
+    return (
+      <div>
+        <Form onSubmit={this.handleSubmit}>
+          <Select
+            placeholder="Select product"
+            options={products}
+            onChange={this.handleProductChange}
+          />
+          <br />
+          <br />
+          {requestFields(this.state.currentProduct, this.state.currentSku)}
+          <Button type="submit" id="button">
+            Submit
+          </Button>
         </Form>
       </div>
     );
