@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Table, Button } from "semantic-ui-react";
 
-class Distributorpage extends Component {
+class ViewRequests extends Component {
   state = {
     error: null,
     isLoaded: false,
@@ -18,10 +18,10 @@ class Distributorpage extends Component {
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
+        console.log(this.props.user);
         const reqs = result.filter((req) => {
-          return req.distributor === this.props.user.name;
+          return req.name === this.props.user.name;
         });
-        console.log(reqs);
         this.setState({
           isLoaded: true,
           items: reqs,
@@ -35,35 +35,29 @@ class Distributorpage extends Component {
       });
   }
 
-  goToStockLevel = () => {
-    this.props.history.push("/distributor/stock-level");
-  };
-
-  generateRequest = (item) => {
-    let requests = `${item.brand}, ${item.sku}, ${item.volume1}, ${item.quantity1}`;
-    if (item.volume2) {
-      requests += ` ,${item.volume2}, ${item.quantity2}`;
-    }
-    return requests;
-  };
-
   render() {
     return (
       <Table unstackable singleLine>
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell>Station Name</Table.HeaderCell>
-            <Table.HeaderCell>Station Location</Table.HeaderCell>
-            <Table.HeaderCell>Requests</Table.HeaderCell>
+            <Table.HeaderCell>Brand</Table.HeaderCell>
+            <Table.HeaderCell>SKU</Table.HeaderCell>
+            <Table.HeaderCell>Volume</Table.HeaderCell>
+            <Table.HeaderCell>Quantity</Table.HeaderCell>
+            <Table.HeaderCell>Volume</Table.HeaderCell>
+            <Table.HeaderCell>Quantity</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
 
         <Table.Body>
           {this.state.items.map((item) => (
             <Table.Row key={item._id}>
-              <Table.Cell>{item.name}</Table.Cell>
-              <Table.Cell>{item.location}</Table.Cell>
-              <Table.Cell>{this.generateRequest(item)}</Table.Cell>
+              <Table.Cell>{item.brand}</Table.Cell>
+              <Table.Cell>{item.sku}</Table.Cell>
+              <Table.Cell>{item.volume1}</Table.Cell>
+              <Table.Cell>{item.quantity1}</Table.Cell>
+              <Table.Cell>{item.volume2 || ""}</Table.Cell>
+              <Table.Cell>{item.quantity2 || ""}</Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>
@@ -72,4 +66,4 @@ class Distributorpage extends Component {
   }
 }
 
-export default Distributorpage;
+export default ViewRequests;

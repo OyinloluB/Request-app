@@ -3,12 +3,12 @@ import { Sidebar, Segment, Button, Menu } from "semantic-ui-react";
 import { Route, NavLink } from "react-router-dom";
 import Dashboard from "../Merchandiser/Dashboard";
 import Request from "../Merchandiser/Request";
-// import Editdetails from "../Merchandiser/Editdetails";
+import ViewRequests from "../Merchandiser/ViewRequests";
 
 class SidebarLeftScaleDown extends Component {
   state = {
     isLoggedIn: false,
-    visible: false
+    visible: false,
   };
 
   toggleVisibility = () => this.setState({ visible: !this.state.visible });
@@ -17,7 +17,9 @@ class SidebarLeftScaleDown extends Component {
     const { visible } = this.state;
     return (
       <div>
-        <Button onClick={this.toggleVisibility} className="hamburger">View Dashboard</Button>
+        <Button onClick={this.toggleVisibility} className="hamburger">
+          View Dashboard
+        </Button>
         <Sidebar.Pushable as={Segment}>
           <Sidebar
             as={Menu}
@@ -35,6 +37,9 @@ class SidebarLeftScaleDown extends Component {
             <Menu.Item name="gamepad">
               <NavLink to="/dashboard/request">Make Request</NavLink>
             </Menu.Item>
+            <Menu.Item name="gamepad">
+              <NavLink to="/dashboard/myrequest">All Requests</NavLink>
+            </Menu.Item>
             {/* <Menu.Item name="camera">
               <NavLink to="/dashboard/editdetails">Edit details</NavLink>
             </Menu.Item> */}
@@ -45,8 +50,14 @@ class SidebarLeftScaleDown extends Component {
           <Sidebar.Pusher>
             <Segment basic id="segment-height">
               <Route exact path="/dashboard/" component={Dashboard} />
-              <Route path="/dashboard/request" render={() => <Request user={this.props.user} />} />
-              {/* <Route path="/dashboard/editdetails" component={Editdetails} /> */}
+              <Route
+                path="/dashboard/request"
+                render={() => <Request user={this.props.user} />}
+              />
+              <Route
+                path="/dashboard/myrequest"
+                render={() => <ViewRequests user={this.props.user} />}
+              />
             </Segment>
           </Sidebar.Pusher>
         </Sidebar.Pushable>
