@@ -37,7 +37,7 @@ class ViewRequests extends Component {
 
   render() {
     return (
-      <Table unstackable singleLine>
+      <Table singleLine>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Brand</Table.HeaderCell>
