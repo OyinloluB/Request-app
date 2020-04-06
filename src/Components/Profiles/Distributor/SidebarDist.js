@@ -3,11 +3,12 @@ import { Sidebar, Segment, Button, Menu } from "semantic-ui-react";
 import { Route, NavLink } from "react-router-dom";
 import DashboardDist from "../Distributor/DashboardDist";
 import Distributorpage from "../Distributor/Distributorpage";
+import Hamburger from "../../../Assets/hamburger.png";
 
 class SidebarDist extends Component {
   state = {
     isLoggedIn: false,
-    visible: false
+    visible: false,
   };
 
   toggleVisibility = () => this.setState({ visible: !this.state.visible });
@@ -16,10 +17,13 @@ class SidebarDist extends Component {
     const { visible } = this.state;
     return (
       <div>
-        <Button onClick={this.toggleVisibility}>View Dashboard</Button>
+        {/* <Button onClick={this.toggleVisibility} id="hamburger"> */}
+        <img src={Hamburger} id="hamburger" onClick={this.toggleVisibility} />
+        {/* </Button> */}
         <Sidebar.Pushable as={Segment}>
           <Sidebar
             as={Menu}
+            id="hamburger"
             animation="scale down"
             width="thin"
             visible={visible}

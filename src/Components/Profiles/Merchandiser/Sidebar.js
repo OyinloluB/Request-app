@@ -4,6 +4,7 @@ import { Route, NavLink } from "react-router-dom";
 import Dashboard from "../Merchandiser/Dashboard";
 import Request from "../Merchandiser/Request";
 import ViewRequests from "../Merchandiser/ViewRequests";
+import Hamburger from "../../../Assets/hamburger.png";
 
 class SidebarLeftScaleDown extends Component {
   state = {
@@ -17,12 +18,13 @@ class SidebarLeftScaleDown extends Component {
     const { visible } = this.state;
     return (
       <div>
-        <Button onClick={this.toggleVisibility} className="hamburger">
-          View Dashboard
-        </Button>
+        {/* <Button onClick={this.toggleVisibility} id="hamburger"> */}
+        <img src={Hamburger} id="hamburger" onClick={this.toggleVisibility} />
+        {/* </Button> */}
         <Sidebar.Pushable as={Segment}>
           <Sidebar
             as={Menu}
+            id="hamburger"
             animation="scale down"
             width="thin"
             id="sidebar"

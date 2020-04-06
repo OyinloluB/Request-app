@@ -1,3 +1,9 @@
+#hamburger {
+  width: 45px;
+  margin-top: 3%;
+  margin-left: 3%;
+  cursor: pointer;
+}
 #segment-height {
   min-height: 100vh;
 }
@@ -10,6 +16,8 @@
 }
 #sidebar {
   width: 30vw;
+  background-color: #b31020;
+  color: #fff;
 }
 #active {
   background-color: #b31020;
@@ -184,7 +192,7 @@ form {
   border: 1px solid #b31020;
 }
 
-@media screen and (max-width: 420px){
+@media screen and (max-width: 420px) {
   #sidebar {
     width: 50vw;
   }
