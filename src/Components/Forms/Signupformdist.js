@@ -72,6 +72,7 @@ class Signupformdist extends Component {
       })
         .then(res => res.json())
         .then(data => {
+          alert('You are signed up!')
           this.props.toggleDistributor(true);
           this.props.history.push("/distributor-dash/");
         })

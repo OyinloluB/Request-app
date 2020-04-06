@@ -64,6 +64,7 @@ class Signinformmerch extends Component {
 			})
 				.then((res) => res.json())
 				.then((data) => {
+					alert('You are signed in!')
 					this.props.toggleMerchandiser(true);
 					this.props.history.push("/dashboard");
 				})

@@ -65,6 +65,7 @@ class Signinformdist extends Component {
     })
       .then(res => res.json())
       .then(data => {
+        alert('You are signed in!')
         this.props.toggleDistributor(true);
         this.props.history.push("/distributor-dash/");
       })

@@ -17,6 +17,7 @@ class Distributorpage extends Component {
 		})
 			.then((res) => res.json())
 			.then((result) => {
+				console.log(result)
 				this.setState({
 					isLoaded: true,
 					items: result
@@ -41,19 +42,16 @@ class Distributorpage extends Component {
 					<Table.Row>
 						<Table.HeaderCell>Station Name</Table.HeaderCell>
             <Table.HeaderCell>Station Location</Table.HeaderCell>
-            {/* <Table.HeaderCell>Requests</Table.HeaderCell> */}
+            <Table.HeaderCell>Requests</Table.HeaderCell>
 					</Table.Row>
 				</Table.Header>
 
 				<Table.Body>
 					{this.state.items.map(item => (
             <Table.Row key={item._id}>
-              <Table.Cell>{item.brand}</Table.Cell>
+              <Table.Cell>{item.name}</Table.Cell>
               <Table.Cell>{item.location}</Table.Cell>
-              {/* <Table.Cell>{item.location}</Table.Cell> */}
-              {/* <Table.Cell>
-                <Button icon="eye" onClick={this.goToStockLevel} />
-              </Table.Cell> */}
+              <Table.Cell>{item.brand}, {item.sku}, {item.volume}, {item.quantity}</Table.Cell>
             </Table.Row>
           ))}
 				</Table.Body>

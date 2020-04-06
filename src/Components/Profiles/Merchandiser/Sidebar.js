@@ -17,7 +17,7 @@ class SidebarLeftScaleDown extends Component {
     const { visible } = this.state;
     return (
       <div>
-        <Button onClick={this.toggleVisibility}>View Dashboard</Button>
+        <Button onClick={this.toggleVisibility} className="hamburger">View Dashboard</Button>
         <Sidebar.Pushable as={Segment}>
           <Sidebar
             as={Menu}
@@ -30,7 +30,7 @@ class SidebarLeftScaleDown extends Component {
             inverted
           >
             <Menu.Item name="home">
-              <NavLink to="/dashboard/">Dashboard</NavLink>
+              <NavLink to="/dashboard/">Stock Cases</NavLink>
             </Menu.Item>
             <Menu.Item name="gamepad">
               <NavLink to="/dashboard/request">Make Request</NavLink>

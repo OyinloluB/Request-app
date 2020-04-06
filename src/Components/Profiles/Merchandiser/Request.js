@@ -3,95 +3,101 @@ import { Button, Select, Form, Input } from "semantic-ui-react";
 
 class Request extends Component {
   state = {
+    name: "",
+    location: "",
+    code: "",
     requests: [
       {
         id: 1,
         name: "Budweiser",
         rgb: [
-          { volume: 375, quantity: "" },
-          { volume: 600, quantity: "" }
+          { volume: "375", quantity: 0 },
+          { volume: "600", quantity: 0 }
         ],
         can: [
-          { volume: 330, quantity: "" },
-          { volume: 500, quantity: "" }
+          { volume: "330", quantity: 0 },
+          { volume: "500", quantity: 0 }
         ]
       },
       {
         id: 2,
         name: "Castle Lite",
         rgb: [
-          { volume: 375, quantity: "" },
-          { volume: 600, quantity: "" }
+          { volume: "375", quantity: 0 },
+          { volume: "600", quantity: 0 }
         ]
       },
       {
         id: 3,
         name: "Trophy Stout",
-        rgb: [{ volume: 600, quantity: "" }]
+        rgb: [{ volume: "600", quantity: 0 }]
       },
       {
         id: 4,
         name: "Hero",
         rgb: [
-          { volume: 375, quantity: "" },
-          { volume: 600, quantity: "" }
+          { volume: "375", quantity: 0 },
+          { volume: "600", quantity: 0 }
         ],
         can: [
-          { volume: 330, quantity: "" },
-          { volume: 500, quantity: "" }
+          { volume: "330", quantity: 0 },
+          { volume: "500", quantity: 0 }
         ]
       },
       {
         id: 5,
         name: "Trophy",
         rgb: [
-          { volume: 375, quantity: "" },
-          { volume: 600, quantity: "" }
+          { volume: "375", quantity: 0 },
+          { volume: "600", quantity: 0 }
         ],
         can: [
-          { volume: 330, quantity: "" },
-          { volume: 500, quantity: "" }
+          { volume: "330", quantity: 0 },
+          { volume: "500", quantity: 0 }
         ]
       },
       {
         id: 6,
         name: "Eagle Lager",
         rgb: [
-          { volume: 330, quantity: "" },
-          { volume: 600, quantity: "" }
+          { volume: "330", quantity: 0 },
+          { volume: "600", quantity: 0 }
         ]
       },
       {
         id: 7,
         name: "Eagle Stout",
         rgb: [
-          { volume: 330, quantity: "" },
-          { volume: 600, quantity: "" }
+          { volume: "330", quantity: 0 },
+          { volume: "600", quantity: 0 }
         ]
       },
       {
         id: 8,
         name: "Grand Malt",
-        rgb: [{ volume: 330, quantity: "" }],
-        can: [{ volume: 330, quantity: "" }],
+        rgb: [{ volume: "330", quantity: 0 }],
+        can: [{ volume: "330", quantity: 0 }],
         pet: [
-          { volume: 250, quantity: "" },
-          { volume: 330, quantity: "" }
+          { volume: "250", quantity: 0 },
+          { volume: "330", quantity: 0 }
         ]
       },
       {
         id: 9,
         name: "Beta Malt",
-        rgb: [{ volume: 330, quantity: "" }],
-        can: [{ volume: 330, quantity: "" }],
+        rgb: [{ volume: "330", quantity: 0 }],
+        can: [{ volume: "330", quantity: 0 }],
         pet: [
-          { volume: 250, quantity: "" },
-          { volume: 330, quantity: "" }
+          { volume: "250", quantity: 0 },
+          { volume: "330", quantity: 0 }
         ]
       }
     ],
     currentProduct: {},
     currentSku: {}
+  };
+  handleChange = e => {
+    this.setState({ [e.target.id]: e.target.value });
   };
 
   handleProductChange = (e, { value }) => {
@@ -121,38 +127,40 @@ class Request extends Component {
     e.preventDefault();
     const quantityIsValid = this.state.currentSku.data.reduce(
       (acc, skuItem) => {
-        return (
-          skuItem.quantity !== "" && !Number(skuItem.quantity).isNaN && acc
-        );
+        return skuItem.quantity !== 0 && !Number(skuItem.quantity).isNaN && acc;
       },
       true
     );
     if (quantityIsValid) {
       let requestData = {
+        name: this.state.name,
+        location: this.state.location,
+        code: this.state.code,
         brand: this.state.currentProduct.name,
         sku: this.state.currentSku.type,
         volume1: this.state.currentSku.data[0].volume,
-        quantity1: this.state.currentSku.data[0].quantity
+        quantity1: Number(this.state.currentSku.data[0].quantity)
       };
       if (this.state.currentSku.data.length > 1) {
         requestData = {
           ...requestData,
           volume2: this.state.currentSku.data[1].volume,
-          quantity2: this.state.currentSku.data[1].quantity
+          quantity2: Number(this.state.currentSku.data[1].quantity)
         };
       }
       console.log(requestData);
       fetch("https://ab-inbev-requestapp.herokuapp.com/Request", {
         method: "POST",
-        // mode: "no-cors",
+        mode: "no-cors",
         headers: {
-          // Accept: "application/json",
+          Accept: "application/json",
           "Content-Type": "application/json"
         },
         body: JSON.stringify(requestData)
       })
         .then(res => res.json())
         .then(data => {
+          alert("Request Successful!");
           console.log(data);
         })
         .catch(err => console.log(err));
@@ -203,7 +211,8 @@ class Request extends Component {
               />
               &nbsp; &nbsp;
               <Input
-                placeholder="Quantity..."
+                type="number"
+                placeholder="Quantity(Cases)"
                 value={skuField.quantity}
                 onChange={(e, { value }) =>
                   this.handleQuantity(value, skuField.volume)
@@ -216,6 +225,31 @@ class Request extends Component {
         });
         return (
           <div key={currentSku.type}>
+            <Form.Input
+              type="text"
+              id="name"
+              label="Name"
+              placeholder="Name"
+              onChange={this.handleChange}
+              // value={this.state.name.value}
+            />
+
+            <Form.Input
+              type="text"
+              id="location"
+              label="Location"
+              placeholder="Location"
+              onChange={this.handleChange}
+              // value={this.state.location.value}
+            />
+            <Form.Input
+              type="text"
+              id="code"
+              label="Code"
+              placeholder="Station Code"
+              onChange={this.handleChange}
+              // value={this.state.code.value}
+            />
             <h6>Select SKU</h6>
             <Select
               placeholder="SKU"

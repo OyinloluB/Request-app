@@ -41,7 +41,7 @@ export default function Merchtable(props) {
 				<Table.Row>
 					<Table.HeaderCell rowSpan="2">Brand</Table.HeaderCell>
 					<Table.HeaderCell rowSpan="2">RGB/CAN/PET</Table.HeaderCell>
-					<Table.HeaderCell rowSpan="2">Value</Table.HeaderCell>
+					<Table.HeaderCell rowSpan="2">Cases</Table.HeaderCell>
 				</Table.Row>
 			</Table.Header>
 

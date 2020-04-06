@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Navbar from "../Layout/Navbar";
-import { Button, Form, Header, Modal } from "semantic-ui-react";
+import { Button, Form, Header, Modal, Select } from "semantic-ui-react";
 
 class Signupformmerch extends Component {
   state = {
@@ -8,8 +8,20 @@ class Signupformmerch extends Component {
     location: { valid: false, value: "", validation: "Location is required" },
     code: { valid: false, value: "", validation: "Code is required" },
     password: { valid: false, value: "", validation: "Password is required" },
+    distributor: { valid: false, value: "", validation: "Distributor is required" },
     formIsValid: false,
-    errorModalActive: false
+    errorModalActive: false,
+    distributors: [
+      { key: "af", value: "Isolo Depot", text: "Isolo Depot" },
+      { key: "ax", value: "Roll Max", text: "Roll Max" },
+      { key: "al", value: "Oja Trading", text: "Oja Trading" },
+      { key: "dz", value: "Onisha Depot", text: "Onisha Depot" },
+      { key: "as", value: "Abuja Depot", text: "Abuja Depot" },
+      { key: "ad", value: "Ilesha", text: "Ilesha" },
+      { key: "ao", value: "Nikky Venture", text: "Nikky Venture" },
+      { key: "ai", value: "Monijez", text: "Monijez" },
+      { key: "ag", value: "Bisihans", text: "Bisihans" }
+    ]
   };
   handleChange = e => {
     const fieldName = e.target.id;
@@ -36,17 +48,23 @@ class Signupformmerch extends Component {
     });
   };
 
+  handleDistributorChange = (e, {value}) => {
+    this.setState({
+      distributor: {valid: true, value: value, validation: ''}
+    })
+  }
+
   validateForm = () => {
-		return new Promise((resolve, reject) => {
-			const {formIsValid, errorModalActive, ...fields} = this.state;
-			const isFormValid = Object.keys(fields).reduce((acc, fieldKey) => {
-				const field = this.state[fieldKey];
-				return acc && field.valid;
-			}, true);
-      this.setState({formIsValid: isFormValid});
+    return new Promise((resolve, reject) => {
+      const { formIsValid, errorModalActive, distributors, ...fields } = this.state;
+      const isFormValid = Object.keys(fields).reduce((acc, fieldKey) => {
+        const field = this.state[fieldKey];
+        return acc && field.valid;
+      }, true);
+      this.setState({ formIsValid: isFormValid });
       resolve();
-		});
-	};
+    });
+  };
 
   handleSubmit = e => {
     e.preventDefault();
@@ -55,11 +73,12 @@ class Signupformmerch extends Component {
         this.setState({ errorModalActive: true });
         return;
       }
-      let name = this.state.name.value;
-      let location = this.state.location.value;
-      let code = this.state.code.value;
-      let password = this.state.password.value;
-  
+      const name = this.state.name.value;
+      const location = this.state.location.value;
+      const code = this.state.code.value;
+      const password = this.state.password.value;
+      const distributor = this.state.distributor.value;
+
       fetch("https://ab-inbev-requestapp.herokuapp.com/Merchandiser", {
         method: "POST",
         headers: {
@@ -67,27 +86,28 @@ class Signupformmerch extends Component {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          name: name,
-          location: location,
-          code: code,
-          password: password
+          name,
+          location,
+          code,
+          password,
+          distributor
         })
       })
         .then(res => res.json())
         .then(data => {
+          alert("You are signed up!");
           this.props.toggleMerchandiser(true);
           this.props.history.push("/dashboard");
         })
         .catch(err => console.log(err));
-    })
+    });
   };
   generateErrorMessages = () => {
     const { formIsValid, errorModalActive, ...fields } = this.state;
     return Object.keys(fields).map(fieldKey => {
       const field = this.state[fieldKey];
       if (!field.valid) {
-        return <p id="valid-text"
-        >{field.validation}</p>;
+        return <p id="valid-text">{field.validation}</p>;
       }
     });
   };
@@ -108,9 +128,7 @@ class Signupformmerch extends Component {
           closeIcon
         >
           <Header icon="error" content="Validation Errors" />
-          <Modal.Content>
-            {this.generateErrorMessages()}
-          </Modal.Content>
+          <Modal.Content>{this.generateErrorMessages()}</Modal.Content>
         </Modal>
 
         <Form onSubmit={this.handleSubmit}>
@@ -133,12 +151,19 @@ class Signupformmerch extends Component {
           />
 
           <Form.Input
-            type="text"
+            type="number"
             id="code"
             label="Code"
             placeholder="Station Code"
             onChange={this.handleChange}
             value={this.state.code.value}
+          />
+
+          <Form.Select
+            placeholder="Select Distributor Developer"
+            options={this.state.distributors}
+            label="Distributor Developer"
+            onChange= {this.handleDistributorChange}
           />
 
           <Form.Input

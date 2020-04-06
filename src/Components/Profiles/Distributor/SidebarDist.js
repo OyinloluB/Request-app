@@ -28,7 +28,7 @@ class SidebarDist extends Component {
             inverted
           >
             <Menu.Item name="dashboard">
-              <NavLink to="/distributor-dash/">Dashboard</NavLink>
+              <NavLink to="/distributor-dash/">Stock Cases</NavLink>
             </Menu.Item>
             <Menu.Item name="requests">
               <NavLink to="/distributor-dash/requests">View Requests</NavLink>

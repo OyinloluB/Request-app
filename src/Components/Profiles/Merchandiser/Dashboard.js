@@ -144,7 +144,11 @@ class Dashboard extends Component {
           "Content-Type": "application/json"
         },
         body: JSON.stringify(reqData)
-      }).then(res => res.json());
+      })
+      .then(res => res.json())
+      .then(data => {
+        alert('Stocks updated!')
+      });
     });
 
     Promise.all(updateStockLevels)
@@ -176,8 +180,8 @@ class Dashboard extends Component {
       <div class="ui container" id="container">
         <div id="content-container">
           <div id="stockvalues">
-            <h6>STOCK VALUES IN CRATES</h6>
-            <p>Click value to edit</p>
+            <h6>STOCK CASES IN CRATES</h6>
+            <p>Click cases to edit</p>
             <div id="merchtable">
               <Merchtable
                 products={this.state.products}
@@ -185,7 +189,7 @@ class Dashboard extends Component {
               />
             </div>
             <Button id="button" onClick={this.handleSubmit}>
-              Submit
+              Update
             </Button>
           </div>
           {/* <div id="bar">
