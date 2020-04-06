@@ -45,7 +45,7 @@ class SidebarLeftScaleDown extends Component {
           <Sidebar.Pusher>
             <Segment basic id="segment-height">
               <Route exact path="/dashboard/" component={Dashboard} />
-              <Route path="/dashboard/request" component={Request} />
+              <Route path="/dashboard/request" render={() => <Request user={this.props.user} />} />
               {/* <Route path="/dashboard/editdetails" component={Editdetails} /> */}
             </Segment>
           </Sidebar.Pusher>

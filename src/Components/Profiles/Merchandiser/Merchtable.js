@@ -45,10 +45,10 @@ export default function Merchtable(props) {
 				</Table.Row>
 			</Table.Header>
 
-			{props.products.map((prod) => (
-				<Table.Body>
+			{props.products.map((prod, index) => (
+				<Table.Body key={index}>
 					{prod.data.map((skuVolData, index) => (
-						<Table.Row>
+						<Table.Row key={index}>
 							{index === 0 ? (
 								<Table.Cell rowSpan={prod.data.length}>{prod.name}</Table.Cell>
 							) : null}

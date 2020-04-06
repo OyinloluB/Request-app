@@ -70,9 +70,12 @@ class Signupformadmin extends Component {
       })
         .then((res) => res.json())
         .then((data) => {
-          alert('You are signed up!')
-          this.props.toggleAdmin(true);
-          this.props.history.push("/distributor/");
+          if (data._id) {
+            const {password, ...user} = data;
+            alert("You are signed up!");
+            this.props.toggleUser(user, 'admin');
+            this.props.history.push("/distributor/");
+          }
         })
         .catch((err) => console.log(err));
     })

@@ -95,9 +95,12 @@ class Signupformmerch extends Component {
       })
         .then(res => res.json())
         .then(data => {
-          alert("You are signed up!");
-          this.props.toggleMerchandiser(true);
-          this.props.history.push("/dashboard");
+          if (data._id) {
+            const {password, ...user} = data;
+            alert("You are signed up!");
+            this.props.toggleUser(user,'merchandiser');
+            this.props.history.push("/dashboard");
+          }
         })
         .catch(err => console.log(err));
     });
@@ -107,7 +110,7 @@ class Signupformmerch extends Component {
     return Object.keys(fields).map(fieldKey => {
       const field = this.state[fieldKey];
       if (!field.valid) {
-        return <p id="valid-text">{field.validation}</p>;
+        return <p key={fieldKey} id="valid-text">{field.validation}</p>;
       }
     });
   };

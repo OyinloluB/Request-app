@@ -177,7 +177,7 @@ class Dashboard extends Component {
 
   render() {
     return (
-      <div class="ui container" id="container">
+      <div className="ui container" id="container">
         <div id="content-container">
           <div id="stockvalues">
             <h6>STOCK CASES IN CRATES</h6>

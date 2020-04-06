@@ -69,9 +69,10 @@ class Signinformadmin extends Component {
       })
         .then(res => res.json())
         .then(data => {
-          if (data.username) {
+          if (data._id) {
+            const {password, ...user} = data;
             alert("You are signed in!");
-            this.props.toggleAdmin(true);
+            this.props.toggleUser(user, 'admin');
             this.props.history.push("/distributor/");
           }
         })

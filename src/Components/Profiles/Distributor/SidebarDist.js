@@ -46,7 +46,7 @@ class SidebarDist extends Component {
               />
               <Route
                 path="/distributor-dash/requests"
-                component={Distributorpage}
+                render={() => <Distributorpage user={this.props.user} />}
               />
             </Segment>
           </Sidebar.Pusher>
