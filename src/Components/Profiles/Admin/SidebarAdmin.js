@@ -26,8 +26,8 @@ class SidebarAdmin extends Component {
         <Sidebar.Pushable as={Segment}>
           <Sidebar
             as={Menu}
-            id="hamburger"
             animation="scale down"
+            id="sidebar"
             width="thin"
             visible={visible}
             icon="labeled"

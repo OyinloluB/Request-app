@@ -8,9 +8,14 @@ class Signupformmerch extends Component {
     location: { valid: false, value: "", validation: "Location is required" },
     code: { valid: false, value: "", validation: "Code is required" },
     password: { valid: false, value: "", validation: "Password is required" },
-    distributor: { valid: false, value: "", validation: "Distributor is required" },
+    distributor: {
+      valid: false,
+      value: "",
+      validation: "Distributor is required",
+    },
     formIsValid: false,
     errorModalActive: false,
+    // loading: false,
     distributors: [
       { key: "af", value: "Isolo Depot", text: "Isolo Depot" },
       { key: "ax", value: "Roll Max", text: "Roll Max" },
@@ -20,10 +25,10 @@ class Signupformmerch extends Component {
       { key: "ad", value: "Ilesha", text: "Ilesha" },
       { key: "ao", value: "Nikky Venture", text: "Nikky Venture" },
       { key: "ai", value: "Monijez", text: "Monijez" },
-      { key: "ag", value: "Bisihans", text: "Bisihans" }
-    ]
+      { key: "ag", value: "Bisihans", text: "Bisihans" },
+    ],
   };
-  handleChange = e => {
+  handleChange = (e) => {
     const fieldName = e.target.id;
     const value = e.target.value;
     const field = { ...this.state[fieldName] };
@@ -44,19 +49,30 @@ class Signupformmerch extends Component {
     }
 
     this.setState({
-      [fieldName]: { ...field, value }
+      [fieldName]: { ...field, value },
     });
   };
 
-  handleDistributorChange = (e, {value}) => {
+  handleDistributorChange = (e, { value }) => {
     this.setState({
-      distributor: {valid: true, value: value, validation: ''}
-    })
-  }
+      distributor: { valid: true, value: value, validation: "" },
+    });
+  };
+
+  // handleClick = (e) => {
+  //   this.setState({
+  //     loading: true,
+  //   });
+  // };
 
   validateForm = () => {
     return new Promise((resolve, reject) => {
-      const { formIsValid, errorModalActive, distributors, ...fields } = this.state;
+      const {
+        formIsValid,
+        errorModalActive,
+        distributors,
+        ...fields
+      } = this.state;
       const isFormValid = Object.keys(fields).reduce((acc, fieldKey) => {
         const field = this.state[fieldKey];
         return acc && field.valid;
@@ -66,7 +82,7 @@ class Signupformmerch extends Component {
     });
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
     this.validateForm().then(() => {
       if (!this.state.formIsValid) {
@@ -83,34 +99,38 @@ class Signupformmerch extends Component {
         method: "POST",
         headers: {
           Accept: "application/json",
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           name,
           location,
           code,
           password,
-          distributor
-        })
+          distributor,
+        }),
       })
-        .then(res => res.json())
-        .then(data => {
+        .then((res) => res.json())
+        .then((data) => {
           if (data._id) {
-            const {password, ...user} = data;
+            const { password, ...user } = data;
             alert("You are signed up!");
-            this.props.toggleUser(user,'merchandiser');
+            this.props.toggleUser(user, "merchandiser");
             this.props.history.push("/dashboard");
           }
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     });
   };
   generateErrorMessages = () => {
-    const { formIsValid, errorModalActive, ...fields } = this.state;
-    return Object.keys(fields).map(fieldKey => {
+    const { formIsValid, errorModalActive, loading, ...fields } = this.state;
+    return Object.keys(fields).map((fieldKey) => {
       const field = this.state[fieldKey];
       if (!field.valid) {
-        return <p key={fieldKey} id="valid-text">{field.validation}</p>;
+        return (
+          <p key={fieldKey} id="valid-text">
+            {field.validation}
+          </p>
+        );
       }
     });
   };
@@ -166,7 +186,7 @@ class Signupformmerch extends Component {
             placeholder="Select Distributor Developer"
             options={this.state.distributors}
             label="Distributor Developer"
-            onChange= {this.handleDistributorChange}
+            onChange={this.handleDistributorChange}
           />
 
           <Form.Input

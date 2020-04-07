@@ -24,7 +24,6 @@ class SidebarLeftScaleDown extends Component {
         <Sidebar.Pushable as={Segment}>
           <Sidebar
             as={Menu}
-            id="hamburger"
             animation="scale down"
             width="thin"
             id="sidebar"
