@@ -33,7 +33,7 @@ class SidebarLeftScaleDown extends Component {
             inverted
           >
             <Menu.Item name="home">
-              <NavLink to="/dashboard/">Stock Cases</NavLink>
+              <NavLink to="/dashboard/">Stock Updates</NavLink>
             </Menu.Item>
             <Menu.Item name="gamepad">
               <NavLink to="/dashboard/request">Make Request</NavLink>
