@@ -8,9 +8,9 @@ class Signupformdist extends Component {
     location: { valid: false, value: "", validation: "Location is required" },
     password: { valid: false, value: "", validation: "Password is required" },
     formIsValid: false,
-    errorModalActive: false
+    errorModalActive: false,
   };
-  handleChange = e => {
+  handleChange = (e) => {
     const fieldName = e.target.id;
     const value = e.target.value;
     const field = { ...this.state[fieldName] };
@@ -31,23 +31,23 @@ class Signupformdist extends Component {
     }
 
     this.setState({
-      [fieldName]: { ...field, value }
+      [fieldName]: { ...field, value },
     });
   };
 
   validateForm = () => {
-		return new Promise((resolve, reject) => {
-			const {formIsValid, errorModalActive, ...fields} = this.state;
-			const isFormValid = Object.keys(fields).reduce((acc, fieldKey) => {
-				const field = this.state[fieldKey];
-				return acc && field.valid;
-			}, true);
-      this.setState({formIsValid: isFormValid});
+    return new Promise((resolve, reject) => {
+      const { formIsValid, errorModalActive, ...fields } = this.state;
+      const isFormValid = Object.keys(fields).reduce((acc, fieldKey) => {
+        const field = this.state[fieldKey];
+        return acc && field.valid;
+      }, true);
+      this.setState({ formIsValid: isFormValid });
       resolve();
-		});
-	};
+    });
+  };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
     this.validateForm().then(() => {
       if (!this.state.formIsValid) {
@@ -57,34 +57,34 @@ class Signupformdist extends Component {
       let name = this.state.name.value;
       let location = this.state.location.value;
       let password = this.state.password.value;
-  
+
       fetch("https://ab-inbev-requestapp.herokuapp.com/Distributor", {
         method: "POST",
         headers: {
           Accept: "application/json",
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           name: name,
           location: location,
-          password: password
-        })
+          password: password,
+        }),
       })
-        .then(res => res.json())
-        .then(data => {
+        .then((res) => res.json())
+        .then((data) => {
           if (data._id) {
-            const {password, ...user} = data;
+            const { password, ...user } = data;
             alert("You are signed up!");
-            this.props.toggleUser(user, 'distributor');
+            this.props.toggleUser(user, "distributor");
             this.props.history.push("/distributor-dash/");
           }
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     });
   };
   generateErrorMessages = () => {
     const { formIsValid, errorModalActive, ...fields } = this.state;
-    return Object.keys(fields).map(fieldKey => {
+    return Object.keys(fields).map((fieldKey) => {
       const field = this.state[fieldKey];
       if (!field.valid) {
         return <p id="valid-text">{field.validation}</p>;
@@ -115,8 +115,8 @@ class Signupformdist extends Component {
           <Form.Input
             type="text"
             id="name"
-            label="Name"
-            placeholder="Name"
+            label="Distributor Developer Name"
+            placeholder="Distributor Developer Name"
             onChange={this.handleChange}
             value={this.state.name.value}
           />

@@ -10,7 +10,7 @@ class DashboardDist extends Component {
   };
 
   componentDidMount() {
-    fetch("https://ab-inbev-requestapp.herokuapp.com/Distributor/stocklevel", {
+    fetch("https://ab-inbev-requestapp.herokuapp.com/Stocklevel", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -184,7 +184,7 @@ class DashboardDist extends Component {
         <div id="content-container">
           <div id="stockvalues">
             <h6>STOCK VALUES IN CRATES</h6>
-            <p>Click value to edit</p>
+            <p>Click cases to edit</p>
             <div id="merchtable">
               <Merchtable
                 products={this.state.products}

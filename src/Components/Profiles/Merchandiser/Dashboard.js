@@ -155,7 +155,7 @@ class Dashboard extends Component {
 
     Promise.all(updateStockLevels)
       .then(() => {
-        return fetch("https://ab-inbev-requestapp.herokuapp.com/Merchandiser/stocklevel", {
+        return fetch("https://ab-inbev-requestapp.herokuapp.com/Stocklevel", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -194,7 +194,6 @@ class Dashboard extends Component {
               Update
             </Button>
           </div>
-          
         </div>
       </div>
     );

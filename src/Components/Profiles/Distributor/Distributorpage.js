@@ -52,7 +52,7 @@ class Distributorpage extends Component {
 
   toggleReqStatus = (status, itemId) => {
     fetch(
-      "https://ab-inbev-requestapp.herokuapp.com/Distributor/toggle-request",
+      "https://ab-inbev-requestapp.herokuapp.com/toggle-route",
       {
         method: "POST",
         headers: {
