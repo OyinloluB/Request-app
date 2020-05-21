@@ -6,7 +6,7 @@ class Signupformmerch extends Component {
   state = {
     name: { valid: false, value: "", validation: "Name is required" },
     location: { valid: false, value: "", validation: "Location is required" },
-    code: { valid: false, value: "", validation: "Code is required" },
+    email: { valid: false, value: "", validation: "Email is required" },
     password: { valid: false, value: "", validation: "Password is required" },
     distributor: {
       valid: false,
@@ -91,7 +91,7 @@ class Signupformmerch extends Component {
       }
       const name = this.state.name.value;
       const location = this.state.location.value;
-      const code = this.state.code.value;
+      const email = this.state.email.value;
       const password = this.state.password.value;
       const distributor = this.state.distributor.value;
 
@@ -104,7 +104,7 @@ class Signupformmerch extends Component {
         body: JSON.stringify({
           name,
           location,
-          code,
+          email,
           password,
           distributor,
         }),
@@ -174,12 +174,12 @@ class Signupformmerch extends Component {
           />
 
           <Form.Input
-            type="number"
-            id="code"
-            label="Code"
-            placeholder="Station Code"
+            type="email"
+            id="email"
+            label="Email"
+            placeholder="Email"
             onChange={this.handleChange}
-            value={this.state.code.value}
+            value={this.state.email.value}
           />
 
           <Form.Select

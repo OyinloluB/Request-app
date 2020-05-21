@@ -4,7 +4,7 @@ import { Button, Form, Header, Modal } from "semantic-ui-react";
 
 class Signinformmerch extends Component {
   state = {
-    code: { valid: false, value: "", validation: "Code is required" },
+    email: { valid: false, value: "", validation: "Email is required" },
     password: { valid: false, value: "", validation: "Password is required" },
     formIsValid: false,
     errorModalActive: false,
@@ -53,17 +53,17 @@ class Signinformmerch extends Component {
         return;
       }
 
-      let code = this.state.code.value;
+      let email = this.state.email.value;
       let password = this.state.password.value;
 
-      fetch("https://ab-inbev-requestapp.herokuapp.com/merchandiser_login", {
+      fetch("https://ab-inbev-requestapp.herokuapp.com/Merchandiser/login", {
         method: "POST",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          code: code,
+          email: email,
           password: password,
         }),
       })
@@ -119,12 +119,12 @@ class Signinformmerch extends Component {
 
         <Form onSubmit={this.handleSubmit}>
           <Form.Input
-            type="text"
-            id="code"
-            label="Code"
-            placeholder="Station Code"
+            type="email"
+            id="email"
+            label="Email"
+            placeholder="Email"
             onChange={this.handleChange}
-            value={this.state.code.value}
+            value={this.state.email.value}
           />
 
           <Form.Input

@@ -51,7 +51,7 @@ class Signinformdist extends Component {
 		let location = this.state.location.value;
 		let password = this.state.password.value;
 
-		fetch("https://ab-inbev-requestapp.herokuapp.com/distributor_login", {
+		fetch("https://ab-inbev-requestapp.herokuapp.com/Distributor/login", {
 			method: "POST",
 			headers: {
 				Accept: "application/json",

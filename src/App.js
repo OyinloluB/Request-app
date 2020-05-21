@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Home from "./Components/General/Home";
-// import Navbar from "./Components/Layout/Navbar";
+import { Notifications } from "react-push-notification";
 import Signinformmerch from "./Components/Forms/Signinformmerch";
 import Signinformdist from "./Components/Forms/Signinformdist";
 import Signupformmerch from "./Components/Forms/Signupformmerch";
@@ -69,7 +69,7 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        {/* <Navbar /> */}
+        <Notifications />
         <div>
           <Switch>
             <PropsRoute exact path="/" component={Home} />

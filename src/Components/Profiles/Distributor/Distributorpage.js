@@ -1,10 +1,13 @@
 import React, { Component } from "react";
-import { Table, Button } from "semantic-ui-react";
+import { Table } from "semantic-ui-react";
+import { Button } from "react-bootstrap";
+import Modal from "../../Layout/Modal.js";
 
 class Distributorpage extends Component {
   state = {
     error: null,
     isLoaded: false,
+    // requestStatus: false,
     items: [],
   };
 
@@ -47,27 +50,80 @@ class Distributorpage extends Component {
     return requests;
   };
 
+  toggleReqStatus = (status, itemId) => {
+    fetch(
+      "https://ab-inbev-requestapp.herokuapp.com/Distributor/toggle-request",
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          reqStatus: status,
+          itemId: itemId,
+        }),
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Success");
+        if (status === false) {
+          fetch(`https://ab-inbev-requestapp.herokuapp.com/Request/${itemId}`, {
+            method: "DELETE",
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              console.log("Deleted");
+            })
+            .catch((err) => console.log(err));
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
   render() {
     return (
-      <Table unstackable singleLine>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>Station Name</Table.HeaderCell>
-            <Table.HeaderCell>Station Location</Table.HeaderCell>
-            <Table.HeaderCell>Requests</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-
-        <Table.Body>
-          {this.state.items.map((item) => (
-            <Table.Row key={item._id}>
-              <Table.Cell>{item.name}</Table.Cell>
-              <Table.Cell>{item.location}</Table.Cell>
-              <Table.Cell>{this.generateRequest(item)}</Table.Cell>
+      <>
+        {/* {this.toggleReqStatus ? <Modal /> : ""} */}
+        <Table unstackable singleLine>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Station Name</Table.HeaderCell>
+              <Table.HeaderCell>Station Location</Table.HeaderCell>
+              <Table.HeaderCell>Requests</Table.HeaderCell>
+              <Table.HeaderCell>Action</Table.HeaderCell>
             </Table.Row>
-          ))}
-        </Table.Body>
-      </Table>
+          </Table.Header>
+
+          <Table.Body>
+            {this.state.items.map((item) => (
+              <Table.Row key={item._id}>
+                <Table.Cell>{item.name}</Table.Cell>
+                <Table.Cell>{item.location}</Table.Cell>
+                <Table.Cell>{this.generateRequest(item)}</Table.Cell>
+                <Table.Cell>
+                  <Button
+                    variant="success"
+                    style={{
+                      marginRight: "10px",
+                    }}
+                    onClick={() => this.toggleReqStatus(true, item._id)}
+                  >
+                    {this.reqStatus ? "Accepted" : "Accept"}
+                  </Button>
+                  <Button
+                    variant="danger"
+                    onClick={() => this.toggleReqStatus(false, item._id)}
+                  >
+                    Decline
+                  </Button>
+                </Table.Cell>
+              </Table.Row>
+            ))}
+          </Table.Body>
+        </Table>
+      </>
     );
   }
 }

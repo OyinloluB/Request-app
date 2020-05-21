@@ -7,30 +7,30 @@ class Dashboard extends Component {
     // percent: 33,
     serverProds: [],
     products: [],
-  }
+  };
   componentDidMount() {
     fetch("https://ab-inbev-requestapp.herokuapp.com/stockLevel", {
       method: "GET",
       headers: {
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     })
-      .then(res => res.json())
-      .then(data => {
-        const brands = Array.from(new Set(data.map(req => req.brand)));
+      .then((res) => res.json())
+      .then((data) => {
+        const brands = Array.from(new Set(data.map((req) => req.brand)));
         this.setState({
           products: [...this.createProductsList(data, brands)],
-          serverProds: [...this.createProductsList(data, brands)]
+          serverProds: [...this.createProductsList(data, brands)],
         });
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   }
 
   createProductsList = (data, brands) => {
-    const result = brands.map(brand => {
-      const brandReqs = data.filter(req => req.brand === brand);
+    const result = brands.map((brand) => {
+      const brandReqs = data.filter((req) => req.brand === brand);
       const reqSkus = [];
-      brandReqs.forEach(brandReq => {
+      brandReqs.forEach((brandReq) => {
         if (brandReq.volume1) {
           const vol1 = Number(brandReq.volume1.slice(0, -2));
           reqSkus.push(
@@ -38,7 +38,7 @@ class Dashboard extends Component {
               volume: vol1,
               sku: brandReq.sku,
               quantity: brandReq.quantity1,
-              volNo: 1
+              volNo: 1,
             })
           );
         }
@@ -49,7 +49,7 @@ class Dashboard extends Component {
               volume: vol2,
               sku: brandReq.sku,
               quantity: brandReq.quantity2,
-              volNo: 2
+              volNo: 2,
             })
           );
         }
@@ -63,19 +63,21 @@ class Dashboard extends Component {
   handleQuantityChange = (e, { brand, sku, volume }) => {
     const newQuantity = e.target.value;
     const updatedProducts = [...this.state.products];
-    const productIndex = updatedProducts.findIndex(prod => prod.name === brand);
+    const productIndex = updatedProducts.findIndex(
+      (prod) => prod.name === brand
+    );
     const product = updatedProducts[productIndex];
     product.data = [
-      ...product.data.map(dataItem => {
+      ...product.data.map((dataItem) => {
         if (dataItem.sku === sku && dataItem.volume === volume) {
           dataItem.quantity = Number(newQuantity);
         }
         return dataItem;
-      })
+      }),
     ];
     updatedProducts[productIndex] = product;
     this.setState({
-      products: [...updatedProducts]
+      products: [...updatedProducts],
     });
   };
 
@@ -93,16 +95,16 @@ class Dashboard extends Component {
           changedData.push({
             sku: dataItem.sku,
             [`volume${dataItem.volNo}`]: dataItem.volume,
-            [`quantity${dataItem.volNo}`]: dataItem.quantity
+            [`quantity${dataItem.volNo}`]: dataItem.quantity,
           });
         }
       });
-      changedSkus.forEach(sku => {
-        const skusData = prod.data.filter(data => data.sku === sku);
-        const vol1Info = skusData.filter(data => data.volNo === 1)[0];
-        const vol2Info = skusData.filter(data => data.volNo === 2)[0];
-        const changedSkusData = changedData.filter(data => data.sku === sku);
-        changedSkusData.forEach(skuData => {
+      changedSkus.forEach((sku) => {
+        const skusData = prod.data.filter((data) => data.sku === sku);
+        const vol1Info = skusData.filter((data) => data.volNo === 1)[0];
+        const vol2Info = skusData.filter((data) => data.volNo === 2)[0];
+        const changedSkusData = changedData.filter((data) => data.sku === sku);
+        changedSkusData.forEach((skuData) => {
           let reqData = {
             brand: prod.name,
             sku: sku,
@@ -113,7 +115,7 @@ class Dashboard extends Component {
             quantity1:
               skuData.quantity1 !== undefined
                 ? skuData.quantity1
-                : vol1Info.quantity
+                : vol1Info.quantity,
           };
           if (vol2Info) {
             reqData = {
@@ -125,7 +127,7 @@ class Dashboard extends Component {
               quantity2:
                 skuData.quantity2 !== undefined
                   ? skuData.quantity2
-                  : vol2Info.quantity
+                  : vol2Info.quantity,
             };
           }
           requestsData.push(reqData);
@@ -137,42 +139,42 @@ class Dashboard extends Component {
 
   handleSubmit = () => {
     const requestsData = this.generateReqData();
-    const updateStockLevels = requestsData.map(reqData => {
+    const updateStockLevels = requestsData.map((reqData) => {
       return fetch("https://ab-inbev-requestapp.herokuapp.com/stockLevel", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(reqData)
+        body: JSON.stringify(reqData),
       })
-      .then(res => res.json())
-      .then(data => {
-        alert('Stocks updated!')
-      });
+        .then((res) => res.json())
+        .then((data) => {
+          alert("Stocks updated!");
+        });
     });
 
     Promise.all(updateStockLevels)
       .then(() => {
-        return fetch("https://ab-inbev-requestapp.herokuapp.com/stockLevel", {
+        return fetch("https://ab-inbev-requestapp.herokuapp.com/Merchandiser/stocklevel", {
           method: "GET",
           headers: {
-            "Content-Type": "application/json"
-          }
-        }).then(res => res.json());
+            "Content-Type": "application/json",
+          },
+        }).then((res) => res.json());
       })
-      .then(data => {
-        const brands = Array.from(new Set(data.map(req => req.brand)));
+      .then((data) => {
+        const brands = Array.from(new Set(data.map((req) => req.brand)));
         this.setState({
           products: [...this.createProductsList(data, brands)],
-          serverProds: [...this.createProductsList(data, brands)]
+          serverProds: [...this.createProductsList(data, brands)],
         });
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
 
   increment = () =>
-    this.setState(prevState => ({
-      percent: prevState.percent >= 100 ? 0 : prevState.percent + 20
+    this.setState((prevState) => ({
+      percent: prevState.percent >= 100 ? 0 : prevState.percent + 20,
     }));
 
   render() {
@@ -192,12 +194,7 @@ class Dashboard extends Component {
               Update
             </Button>
           </div>
-          {/* <div id="bar">
-						<h6>Latest request status</h6>
-						<div id="progress-bar">
-							<Progress id="progress" percent={this.state.percent} indicating />
-						</div>
-					</div> */}
+          
         </div>
       </div>
     );
