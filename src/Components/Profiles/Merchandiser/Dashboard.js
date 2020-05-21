@@ -182,7 +182,7 @@ class Dashboard extends Component {
       <div className="ui container" id="container">
         <div id="content-container">
           <div id="stockvalues">
-            <h6>STOCK CASES IN CRATES</h6>
+            <h6>STOCK CASES IN CASES</h6>
             <p>Click cases to edit</p>
             <div id="merchtable">
               <Merchtable
