@@ -7,6 +7,7 @@ class Signinformdist extends Component {
     name: { valid: false, value: "", validation: "Name is required" },
     location: { valid: false, value: "", validation: "Location is required" },
     password: { valid: false, value: "", validation: "Password is required" },
+    token: "",
     formIsValid: false,
     errorModalActive: false,
   };
@@ -43,10 +44,10 @@ class Signinformdist extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    if (!this.state.formIsValid) {
-      this.setState({ errorModalActive: true });
-      return;
-    }
+    // if (!this.state.formIsValid) {
+    //   this.setState({ errorModalActive: true });
+    //   return;
+    // }
     let name = this.state.name.value;
     let location = this.state.location.value;
     let password = this.state.password.value;
@@ -65,7 +66,13 @@ class Signinformdist extends Component {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data._id) {
+        console.log(data);
+        this.setState({ token: data.token });
+        localStorage.setItem("user", JSON.stringify(data));
+        console.log(this.state.token);
+        console.log(data.distributor._id);
+        if (data.distributor._id) {
+          console.log("text");
           const { password, ...user } = data;
           alert("You are signed in!");
           this.props.toggleUser(user, "distributor");
@@ -74,29 +81,30 @@ class Signinformdist extends Component {
       })
       .catch((err) => console.log(err));
   };
-  generateErrorMessages = () => {
-    const { formIsValid, errorModalActive, ...fields } = this.state;
-    return Object.keys(fields).map((fieldKey) => {
-      const field = this.state[fieldKey];
-      if (!field.valid) {
-        return (
-          <p key={fieldKey} id="valid-text">
-            {field.validation}
-          </p>
-        );
-      }
-    });
-  };
 
-  closeModal = () => {
-    this.setState({ errorModalActive: false });
-  };
+  // generateErrorMessages = () => {
+  //   const { formIsValid, errorModalActive, ...fields } = this.state;
+  //   return Object.keys(fields).map((fieldKey) => {
+  //     const field = this.state[fieldKey];
+  //     if (!field.valid) {
+  //       return (
+  //         <p key={fieldKey} id="valid-text">
+  //           {field.validation}
+  //         </p>
+  //       );
+  //     }
+  //   });
+  // };
+
+  // closeModal = () => {
+  //   this.setState({ errorModalActive: false });
+  // };
 
   render() {
     return (
       <div>
         <Navbar />
-        <Modal
+        {/* <Modal
           open={this.state.errorModalActive}
           size="mini"
           id="modal"
@@ -105,7 +113,7 @@ class Signinformdist extends Component {
         >
           <Header icon="error" content="Validation Errors" />
           <Modal.Content>{this.generateErrorMessages()}</Modal.Content>
-        </Modal>
+        </Modal> */}
 
         <Form onSubmit={this.handleSubmit}>
           <Form.Input

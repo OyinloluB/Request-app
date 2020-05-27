@@ -163,6 +163,8 @@ class Dashboard extends Component {
         }).then((res) => res.json());
       })
       .then((data) => {
+        console.log(data);
+        console.log("gotten");
         const brands = Array.from(new Set(data.map((req) => req.brand)));
         this.setState({
           products: [...this.createProductsList(data, brands)],

@@ -69,7 +69,8 @@ class Signinformmerch extends Component {
       })
         .then((res) => res.json())
         .then((data) => {
-          if (data._id) {
+          console.log(data.merchandiser._id);
+          if (data.merchandiser._id) {
             const { password, ...user } = data;
             alert("You are signed in!");
             this.props.toggleUser(user, "merchandiser");

@@ -8,9 +8,9 @@ class Signupformadmin extends Component {
     // location: { valid: false, value: "", validation: "Location is required" },
     password: { valid: false, value: "", validation: "Password is required" },
     formIsValid: false,
-    errorModalActive: false
+    errorModalActive: false,
   };
-  handleChange = e => {
+  handleChange = (e) => {
     const fieldName = e.target.id;
     const value = e.target.value;
     const field = { ...this.state[fieldName] };
@@ -31,23 +31,23 @@ class Signupformadmin extends Component {
     }
 
     this.setState({
-      [fieldName]: { ...field, value }
+      [fieldName]: { ...field, value },
     });
   };
 
   validateForm = () => {
-		return new Promise((resolve, reject) => {
-			const {formIsValid, errorModalActive, ...fields} = this.state;
-			const isFormValid = Object.keys(fields).reduce((acc, fieldKey) => {
-				const field = this.state[fieldKey];
-				return acc && field.valid;
-			}, true);
-      this.setState({formIsValid: isFormValid});
+    return new Promise((resolve, reject) => {
+      const { formIsValid, errorModalActive, ...fields } = this.state;
+      const isFormValid = Object.keys(fields).reduce((acc, fieldKey) => {
+        const field = this.state[fieldKey];
+        return acc && field.valid;
+      }, true);
+      this.setState({ formIsValid: isFormValid });
       resolve();
-		});
-	};
+    });
+  };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
     this.validateForm().then(() => {
       if (!this.state.formIsValid) {
@@ -56,7 +56,7 @@ class Signupformadmin extends Component {
       }
       let username = this.state.username.value;
       let password = this.state.password.value;
-  
+
       fetch("https://ab-inbev-requestapp.herokuapp.com/Admin", {
         method: "POST",
         headers: {
@@ -71,18 +71,18 @@ class Signupformadmin extends Component {
         .then((res) => res.json())
         .then((data) => {
           if (data._id) {
-            const {password, ...user} = data;
+            const { password, ...user } = data;
             alert("You are signed up!");
-            this.props.toggleUser(user, 'admin');
+            this.props.toggleUser(user, "admin");
             this.props.history.push("/distributor/");
           }
         })
         .catch((err) => console.log(err));
-    })
+    });
   };
   generateErrorMessages = () => {
     const { formIsValid, errorModalActive, ...fields } = this.state;
-    return Object.keys(fields).map(fieldKey => {
+    return Object.keys(fields).map((fieldKey) => {
       const field = this.state[fieldKey];
       if (!field.valid) {
         return <p id="valid-text">{field.validation}</p>;

@@ -59,12 +59,6 @@ class Signupformmerch extends Component {
     });
   };
 
-  // handleClick = (e) => {
-  //   this.setState({
-  //     loading: true,
-  //   });
-  // };
-
   validateForm = () => {
     return new Promise((resolve, reject) => {
       const {
@@ -111,7 +105,8 @@ class Signupformmerch extends Component {
       })
         .then((res) => res.json())
         .then((data) => {
-          if (data._id) {
+          console.log(data.merchandiser._id);
+          if (data.merchandiser._id) {
             const { password, ...user } = data;
             alert("You are signed up!");
             this.props.toggleUser(user, "merchandiser");

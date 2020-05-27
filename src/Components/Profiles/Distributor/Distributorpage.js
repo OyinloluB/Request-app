@@ -22,7 +22,7 @@ class Distributorpage extends Component {
       .then((result) => {
         console.log(result);
         const reqs = result.filter((req) => {
-          return req.distributor === this.props.user.name;
+          return req.distributor === this.props.user.distributor.name;
         });
         console.log(reqs);
         this.setState({
@@ -51,20 +51,17 @@ class Distributorpage extends Component {
   };
 
   toggleReqStatus = (status, itemId) => {
-    fetch(
-      "https://ab-inbev-requestapp.herokuapp.com/toggle-route",
-      {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          reqStatus: status,
-          itemId: itemId,
-        }),
-      }
-    )
+    fetch("https://ab-inbev-requestapp.herokuapp.com/toggle-route", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        reqStatus: status,
+        itemId: itemId,
+      }),
+    })
       .then((res) => res.json())
       .then((data) => {
         console.log("Success");

@@ -7,8 +7,24 @@ class Signupformdist extends Component {
     name: { valid: false, value: "", validation: "Name is required" },
     location: { valid: false, value: "", validation: "Location is required" },
     password: { valid: false, value: "", validation: "Password is required" },
+    // distributor: {
+    //   valid: false,
+    //   value: "",
+    //   validation: "Distributor is required",
+    // },
     formIsValid: false,
     errorModalActive: false,
+    distributors: [
+      { key: "af", value: "Isolo Depot", text: "Isolo Depot" },
+      { key: "ax", value: "Roll Max", text: "Roll Max" },
+      { key: "al", value: "Oja Trading", text: "Oja Trading" },
+      { key: "dz", value: "Onisha Depot", text: "Onisha Depot" },
+      { key: "as", value: "Abuja Depot", text: "Abuja Depot" },
+      { key: "ad", value: "Ilesha", text: "Ilesha" },
+      { key: "ao", value: "Nikky Venture", text: "Nikky Venture" },
+      { key: "ai", value: "Monijez", text: "Monijez" },
+      { key: "ag", value: "Bisihans", text: "Bisihans" },
+    ],
   };
   handleChange = (e) => {
     const fieldName = e.target.id;
@@ -19,6 +35,10 @@ class Signupformdist extends Component {
       case "name":
         field.valid = value !== "";
         field.validation = field.valid ? "" : "Name cannot be empty";
+        break;
+      case "location":
+        field.valid = value !== "";
+        field.validation = field.valid ? "" : "Location cannot be empty";
         break;
       case "password":
         field.valid = value.length >= 6;
@@ -47,16 +67,23 @@ class Signupformdist extends Component {
     });
   };
 
+  handleDistributorChange = (e, { value }) => {
+    this.setState({
+      distributor: { valid: true, value: value, validation: "" },
+    });
+  };
+
   handleSubmit = (e) => {
     e.preventDefault();
     this.validateForm().then(() => {
-      if (!this.state.formIsValid) {
-        this.setState({ errorModalActive: true });
-        return;
-      }
+      // if (!this.state.formIsValid) {
+      //   this.setState({ errorModalActive: true });
+      //   return;
+      // }
       let name = this.state.name.value;
       let location = this.state.location.value;
       let password = this.state.password.value;
+      // const distributor = this.state.distributor.value;
 
       fetch("https://ab-inbev-requestapp.herokuapp.com/Distributor", {
         method: "POST",
@@ -66,13 +93,15 @@ class Signupformdist extends Component {
         },
         body: JSON.stringify({
           name: name,
+          // distributor: distributor,
           location: location,
           password: password,
         }),
       })
         .then((res) => res.json())
         .then((data) => {
-          if (data._id) {
+          console.log(data.distributor._id);
+          if (data.distributor._id) {
             const { password, ...user } = data;
             alert("You are signed up!");
             this.props.toggleUser(user, "distributor");
@@ -112,6 +141,13 @@ class Signupformdist extends Component {
         </Modal>
 
         <Form onSubmit={this.handleSubmit}>
+          {/* <Form.Select
+            placeholder="Select Distributor Developer"
+            options={this.state.distributors}
+            label="Distributor Developer"
+            onChange={this.handleDistributorChange}
+          /> */}
+
           <Form.Input
             type="text"
             id="name"

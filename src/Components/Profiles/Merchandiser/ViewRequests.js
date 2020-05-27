@@ -20,8 +20,9 @@ class ViewRequests extends Component {
         console.log(result);
         console.log(this.props.user);
         const reqs = result.filter((req) => {
-          return req.name === this.props.user.name;
+          return req.name === this.props.user.merchandiser.name;
         });
+        console.log(reqs);
         this.setState({
           isLoaded: true,
           items: reqs,
