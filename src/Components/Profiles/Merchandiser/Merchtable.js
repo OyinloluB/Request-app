@@ -64,15 +64,17 @@ export default function Merchtable(props) {
                     </Table.Cell>
                   ) : null}
                   <Table.Cell>
-                    <img
-                      src={skuImage.image}
-                      width="50"
-                      height="50"
-                      alt="product"
-                      style={{
-                        objectFit: "contain",
-                      }}
-                    />
+                    {skuImage.image ? (
+                      <img
+                        src={skuImage.image}
+                        width="50"
+                        height="50"
+                        alt="product"
+                        style={{
+                          objectFit: "contain",
+                        }}
+                      />
+                    ) : null}
                   </Table.Cell>
                   <Table.Cell>{`${skuVolData.volume}ml (${skuVolData.sku})`}</Table.Cell>
                   <Table.Cell className="dashboard-value">
