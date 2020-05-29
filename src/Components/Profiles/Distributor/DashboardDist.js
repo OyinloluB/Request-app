@@ -8,9 +8,8 @@ class DashboardDist extends Component {
     serverProds: [],
     products: [],
   };
-
   componentDidMount() {
-    fetch("https://ab-inbev-requestapp.herokuapp.com/Stocklevel", {
+    fetch("https://ab-inbev-requestapp.herokuapp.com/stockLevel", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -28,10 +27,13 @@ class DashboardDist extends Component {
   }
 
   createProductsList = (data, brands) => {
+    console.log(data);
     const result = brands.map((brand) => {
       const brandReqs = data.filter((req) => req.brand === brand);
       const reqSkus = [];
+      const brandImages = [];
       brandReqs.forEach((brandReq) => {
+        brandImages.push({ sku: brandReq.sku, image: brandReq.image });
         if (brandReq.volume1) {
           const vol1 = Number(brandReq.volume1.slice(0, -2));
           reqSkus.push(
@@ -56,7 +58,7 @@ class DashboardDist extends Component {
         }
       });
       const uniqueProductData = Array.from(new Set(reqSkus)).map(JSON.parse);
-      return { name: brand, data: uniqueProductData };
+      return { name: brand, images: brandImages, data: uniqueProductData };
     });
     return result;
   };
@@ -156,7 +158,7 @@ class DashboardDist extends Component {
 
     Promise.all(updateStockLevels)
       .then(() => {
-        return fetch("https://ab-inbev-requestapp.herokuapp.com/stockLevel", {
+        return fetch("https://ab-inbev-requestapp.herokuapp.com/Stocklevel", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -164,6 +166,8 @@ class DashboardDist extends Component {
         }).then((res) => res.json());
       })
       .then((data) => {
+        console.log(data);
+        console.log("gotten");
         const brands = Array.from(new Set(data.map((req) => req.brand)));
         this.setState({
           products: [...this.createProductsList(data, brands)],
@@ -183,7 +187,7 @@ class DashboardDist extends Component {
       <div className="ui container" id="container">
         <div id="content-container">
           <div id="stockvalues">
-            <h6>STOCK VALUES IN CASES</h6>
+            <h6>STOCK CASES IN CASES</h6>
             <p>Click cases to edit</p>
             <div id="merchtable">
               <Merchtable
@@ -192,15 +196,9 @@ class DashboardDist extends Component {
               />
             </div>
             <Button id="button" onClick={this.handleSubmit}>
-              Submit
+              Update
             </Button>
           </div>
-          {/* <div id="bar">
-						<h6>Latest request status</h6>
-						<div id="progress-bar">
-							<Progress id="progress" percent={this.state.percent} indicating />
-						</div>
-					</div> */}
         </div>
       </div>
     );

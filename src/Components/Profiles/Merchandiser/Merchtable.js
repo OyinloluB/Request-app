@@ -35,6 +35,8 @@ export default function Merchtable(props) {
     }
   };
 
+  const buildProductColumn = () => {};
+
   return (
     <Table celled structured unstackable id="stocktable">
       <Table.Header>
@@ -46,28 +48,42 @@ export default function Merchtable(props) {
         </Table.Row>
       </Table.Header>
 
-      {props.products.map((prod, index) => (
-        <Table.Body key={index}>
-          {prod.data.map((skuVolData, index) => (
-            <Table.Row key={index}>
-              {index === 0 ? (
-                <>
-                  <Table.Cell rowSpan={prod.data.length}>
-                    {prod.name}
+      {props.products.map((prod, index) => {
+        console.log(prod);
+        return (
+          <Table.Body key={prod.name}>
+            {prod.data.map((skuVolData, index) => {
+              const skuImage = prod.images.find(
+                (skuImageData) => skuImageData.sku === skuVolData.sku
+              );
+              return (
+                <Table.Row key={index}>
+                  {index === 0 ? (
+                    <Table.Cell rowSpan={prod.data.length}>
+                      {prod.name}
+                    </Table.Cell>
+                  ) : null}
+                  <Table.Cell>
+                    <img
+                      src={skuImage.image}
+                      width="50"
+                      height="50"
+                      alt="product"
+                      style={{
+                        objectFit: "contain",
+                      }}
+                    />
                   </Table.Cell>
-                  <Table.Cell rowSpan={prod.data.length}>
-                    <img src={prod.image} alt="product" />
+                  <Table.Cell>{`${skuVolData.volume}ml (${skuVolData.sku})`}</Table.Cell>
+                  <Table.Cell className="dashboard-value">
+                    {buildInput(prod.name, skuVolData)}
                   </Table.Cell>
-                </>
-              ) : null}
-              <Table.Cell>{`${skuVolData.volume}ml (${skuVolData.sku})`}</Table.Cell>
-              <Table.Cell className="dashboard-value">
-                {buildInput(prod.name, skuVolData)}
-              </Table.Cell>
-            </Table.Row>
-          ))}
-        </Table.Body>
-      ))}
+                </Table.Row>
+              );
+            })}
+          </Table.Body>
+        );
+      })}
     </Table>
   );
 }

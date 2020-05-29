@@ -1,17 +1,25 @@
 import React, { Component } from "react";
 import { Button, Select, Form, Input } from "semantic-ui-react";
-import BudCan from "../../../Assets/sku/BudCan.png";
+import BudCan330 from "../../../Assets/sku/BudCan330.png";
+import BudCan500 from "../../../Assets/sku/BudCan.png";
 import BudRgb from "../../../Assets/sku/BudRGB.png";
+import CastleLite from "../../../Assets/sku/CastleLite.png";
 import Hero from "../../../Assets/sku/HeroRGB.png";
 import Trophy from "../../../Assets/sku/TrophyRGB.png";
-import TrophyCan from "../../../Assets/sku/TrophyCan.png";
+import Trophy330 from "../../../Assets/sku/Trophy330.png";
+import Trophy500 from "../../../Assets/sku/TrophyCan.png";
 import EagleLager from "../../../Assets/sku/EagleLagerRGB.png";
+import EagleLager330 from "../../../Assets/sku/EagleLager330.png";
+import EagleXtra330 from "../../../Assets/sku/EagleXtra330.png";
+import EagleXtra from "../../../Assets/sku/EagleXtraRGB.png";
 import BetaRgb from "../../../Assets/sku/BetaRGB.png";
 import BetaPet from "../../../Assets/sku/BetaPET.png";
 import BetaCan from "../../../Assets/sku/BetaCan.png";
-import GrandPET from "../../../Assets/sku/GrandMaltPET.png";
+import Grand250 from "../../../Assets/sku/GrandMaltPET.png";
+import Grand330 from "../../../Assets/sku/GrandMaltPet330.png";
 import GrandRGB from "../../../Assets/sku/GrandMaltRGB.png";
 import GrandCAN from "../../../Assets/sku/GrandMaltCan.png";
+import "./request.css";
 
 class Request extends Component {
   state = {
@@ -21,19 +29,19 @@ class Request extends Component {
         id: 1,
         name: "Budweiser",
         rgb: [
-          { volume: "375", quantity: "", image: BudCan },
+          { volume: "375", quantity: "", image: "" },
           { volume: "600", quantity: "", image: BudRgb },
         ],
         can: [
-          { volume: "330", quantity: "", image: BudCan },
-          { volume: "500", quantity: "", image: "" },
+          { volume: "330", quantity: "", image: BudCan330 },
+          { volume: "500", quantity: "", image: BudCan500 },
         ],
       },
       {
         id: 2,
         name: "Castle Lite",
         rgb: [
-          { volume: "375", quantity: "", image: "" },
+          { volume: "375", quantity: "", image: CastleLite },
           { volume: "600", quantity: "", image: "" },
         ],
       },
@@ -58,19 +66,19 @@ class Request extends Component {
         id: 5,
         name: "Trophy",
         rgb: [
-          { volume: "375", quantity: "", image: Trophy },
-          { volume: "600", quantity: "", image: "" },
+          { volume: "375", quantity: "", image: "" },
+          { volume: "600", quantity: "", image: Trophy },
         ],
         can: [
-          { volume: "330", quantity: "", image: "" },
-          { volume: "500", quantity: "", image: TrophyCan },
+          { volume: "330", quantity: "", image: Trophy330 },
+          { volume: "500", quantity: "", image: Trophy500 },
         ],
       },
       {
         id: 6,
         name: "Eagle Lager",
         rgb: [
-          { volume: "330", quantity: "", image: "" },
+          { volume: "330", quantity: "", image: EagleLager330 },
           { volume: "600", quantity: "", image: EagleLager },
         ],
       },
@@ -78,18 +86,18 @@ class Request extends Component {
         id: 7,
         name: "Eagle Stout",
         rgb: [
-          { volume: "330", quantity: "", image: "" },
-          { volume: "600", quantity: "", image: "" },
+          { volume: "330", quantity: "", image: EagleXtra330 },
+          { volume: "600", quantity: "", image: EagleXtra },
         ],
       },
       {
         id: 8,
         name: "Grand Malt",
-        rgb: [{ volume: "330", quantity: "", image: GrandRGB }],
+        rgb: [{ volume: "330", quantity: "", image: Grand330 }],
         can: [{ volume: "330", quantity: "", image: GrandCAN }],
         pet: [
-          { volume: "250", quantity: "", image: "" },
-          { volume: "330", quantity: "", image: GrandPET },
+          { volume: "250", quantity: "", image: Grand250 },
+          { volume: "330", quantity: "", image: GrandRGB },
         ],
       },
       {
@@ -98,7 +106,7 @@ class Request extends Component {
         rgb: [{ volume: "330", quantity: "", image: BetaRgb }],
         can: [{ volume: "330", quantity: "", image: BetaCan }],
         pet: [
-          { volume: "250", quantity: "", image: "" },
+          { volume: "250", quantity: "", image: BetaPet },
           { volume: "330", quantity: "", image: BetaPet },
         ],
       },
@@ -268,20 +276,26 @@ class Request extends Component {
 
     return (
       <div>
-        <Form onSubmit={this.handleSubmit}>
-          <Select
-            placeholder="Select product"
-            options={products}
-            onChange={this.handleProductChange}
-          />
-          <br />
-          <br />
-          {requestFields(this.state.currentProduct, this.state.currentSku)}
+        <Form onSubmit={this.handleSubmit} className="request">
+          <div>
+            <Select
+              placeholder="Select product"
+              options={products}
+              onChange={this.handleProductChange}
+            />
+            <br />
+            <br />
+            {requestFields(this.state.currentProduct, this.state.currentSku)}
+            <Button type="submit" id="button">
+              Submit
+            </Button>
+          </div>
           <div>
             {this.state.currentSku.data.map((skuField) => {
               if (skuField.image !== "") {
                 return (
                   <img
+                    width="100px"
                     src={skuField.image}
                     alt={`${this.state.currentProduct.name} ${skuField.volume}ml`}
                   />
@@ -289,9 +303,6 @@ class Request extends Component {
               }
             })}
           </div>
-          <Button type="submit" id="button">
-            Submit
-          </Button>
         </Form>
       </div>
     );

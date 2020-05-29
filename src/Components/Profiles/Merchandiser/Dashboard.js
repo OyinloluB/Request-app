@@ -27,10 +27,13 @@ class Dashboard extends Component {
   }
 
   createProductsList = (data, brands) => {
+    console.log(data);
     const result = brands.map((brand) => {
       const brandReqs = data.filter((req) => req.brand === brand);
       const reqSkus = [];
+      const brandImages = [];
       brandReqs.forEach((brandReq) => {
+        brandImages.push({ sku: brandReq.sku, image: brandReq.image });
         if (brandReq.volume1) {
           const vol1 = Number(brandReq.volume1.slice(0, -2));
           reqSkus.push(
@@ -55,7 +58,7 @@ class Dashboard extends Component {
         }
       });
       const uniqueProductData = Array.from(new Set(reqSkus)).map(JSON.parse);
-      return { name: brand, data: uniqueProductData };
+      return { name: brand, images: brandImages, data: uniqueProductData };
     });
     return result;
   };
